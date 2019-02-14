@@ -1,0 +1,18 @@
+﻿@model IEnumerable<string>
+<a class="btn btn-block btn-dark"
+   asp-action="List"
+   asp-controller="Dijelovi"
+   asp-route-mar="">
+    Svi
+</a>
+@foreach (string mar in Model)
+{
+<a class="btn btn-block
+@(mar == ViewBag.SelectedMake ? "btn-primary": "btn-secondary")"
+   asp-action="List"
+   asp-controller="Dijelovi"
+   asp-route-mar="@mar"
+   asp-route-productPage="1">
+    @mar
+</a>
+}

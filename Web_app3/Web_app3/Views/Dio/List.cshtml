@@ -1,0 +1,45 @@
+﻿@model DioListVM
+
+<div id="preloader">
+    <div class="loader"></div>
+</div>
+<div class="container-fluid">
+    <div id="categories" class="col-lg-1">
+        @await Component.InvokeAsync("NavMenuMake")
+    </div>
+    <div id="categories" class="col-lg-1">
+        @await Component.InvokeAsync("NavMenu")
+    </div>
+    <div class="col-lg-10">
+        <ul class="form-inline">
+            @foreach (var item in Model.kategorije)
+            {
+                <li id="kat">
+                    <a asp-action="List" asp-route-mod="@Model.TrenutniModel" asp-route-id="@item.Id">
+                        <center>
+                            <span class="thumb">
+                                @{
+                                    var base64 = Convert.ToBase64String(item.Slika);
+                                    var imgsrc = string.Format("data:image/gif;base64,{0}", base64);
+                                }
+                                <img src="@imgsrc" style="width:100%;height:80px;padding:0 15% 0 15%">
+                            </span>
+                        </center>
+                        <h3>@item.Naziv</h3>
+                    </a>
+                </li>
+            }
+
+        </ul>
+        <center><h3>@Model.TrenutniModel</h3></center>
+        <hr />
+        @foreach (var p in Model.Dijelovi)
+        {
+            @Html.Partial("DioSummary", p)
+        }
+    </div>
+    <div class="row" style="float:left; padding-left:35px; position:absolute; margin-top:300px" page-model="@Model.Paging" page-action="List" page-classes-enabled="true"
+         page-class="btn" page-class-normal="btn-secondary"
+         page-class-selected="btn-primary" page-url-mod="@Model.TrenutniModel">
+    </div>
+</div>

@@ -1,0 +1,80 @@
+﻿@model AutoServis.ViewModels.LoginVM
+@{
+    string error_poruka = (string)TempData["error_poruka"];
+}
+
+
+@using AutoServis.Helper
+
+@{
+    Uposlenik username = Context.GetLogiraniKorisnik();
+}
+@if (username == null || username.VrstaUposlenikaId == 2)
+{
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+}
+<div class="">
+    <div class="container" style="margin-top:-85px; margin-right:520px;">
+
+        <div class="login-box ptb--100">
+            <form asp-action="Login">
+                @if (error_poruka != null)
+                {
+                    <br />
+                    <div class="alert alert-danger">@error_poruka</div>
+
+                }
+                <div class="login-form-head" style="background-color:#2E74AE">
+                    <h4>LOGIN</h4>
+                    <p>Zdravo, unesite svoje korisničko ime i password da bi pristupili svome modulu! </p>
+                </div>
+                <div class="login-form-body">
+                    <div class="form-gp">
+                        <label>Korisničko ime</label>
+                        <input asp-for="username">
+                        <i class="ti-user"></i>
+                        <span asp-validation-for="username" class="text-danger"></span>
+
+                    </div>
+                    <div class="form-gp">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" asp-for="password" id="exampleInputPassword1">
+                        <i class="ti-lock"></i>
+                        <span asp-validation-for="password" class="text-danger"></span>
+
+                    </div>
+
+                    <div class="submit-btn-area">
+                        <button id="form_submit" type="submit">Logiraj se <i class="ti-arrow-right"></i></button>
+
+                    </div>
+                </div>
+                <div class=" alert alert-info">
+                    <h2>Korisnički podatci za module:</h2>
+                    <h3>Administrator:</h3>
+                    <p>Korisničko ime: Admin, PASSWORD:admin</p>
+                    <h3>Menadžer dijelova:</h3>
+                    <p>Korisničko ime: MD, PASSWORD:test</p>
+                    <h3>Menadžer dijelova:</h3>
+                    <p>Korisničko ime: MA, PASSWORD:test</p>
+                    <h3>Majstor:</h3>
+                    <p>Korisničkoime: MM, PASSWORD:test</p>
+                </div>
+            </form>
+            
+
+        </div>
+        
+          
+        
+
+    </div>
+
+</div>
+
+
+
+
+

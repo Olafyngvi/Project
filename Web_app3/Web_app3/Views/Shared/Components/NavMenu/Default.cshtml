@@ -1,0 +1,14 @@
+﻿@model IEnumerable<string>
+
+@foreach (string mod in Model)
+{
+<a class="btn btn-block
+@(mod == ViewBag.SelectedModel ? "btn-primary": "btn-secondary")"
+   style="text-align:left;width:110px"
+   asp-action="List"
+   asp-controller="Dijelovi"
+   asp-route-mod="@mod"
+   asp-route-productPage="1">
+    @mod
+</a>
+}

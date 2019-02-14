@@ -1,0 +1,65 @@
+﻿@model AutoServis.Models.Dio
+
+@{
+    Layout = null;
+}
+
+<h2>Izmjena</h2>
+
+<div class="row">
+    <div class="col-md-4">  
+        <form asp-action="Edit">
+            <input type="hidden" asp-for="DioId" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <table class="table table-bordered" style="box-shadow: 0 4px 8px rgba(0,0,0,.08)">
+                <tr>
+                    <td> <label asp-for="Naziv" class="control-label"></label></td>
+                    <td>
+                        <input asp-for="Naziv" required
+                               oninvalid="this.setCustomValidity('Naziv je obavezan!')"
+                               oninput="this.setCustomValidity('')" class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <td><label asp-for="Cijena" class="control-label"></label></td>
+                    <td>
+                        <input asp-for="Cijena" required
+                               oninvalid="this.setCustomValidity('Cijena je obavezna!')"
+                               oninput="this.setCustomValidity('')" class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>  <label asp-for="Sifra" class="control-label"></label></td>
+                    <td>
+                        <input asp-for="Sifra" required
+                               oninvalid="this.setCustomValidity('Sifra je obavezna!')"
+                               oninput="this.setCustomValidity('')" class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <td> <label asp-for="KategorijaId" class="control-label">Naziv kategorije</label></td>
+                    <td>
+                        <select style="height:40px" asp-for="KategorijaId" required
+                                oninvalid="this.setCustomValidity('Kategorija je obavezna!')"
+                                oninput="this.setCustomValidity('')" class="form-control" asp-items="ViewBag.KategorijaID">
+                            <option></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td> <label asp-for="ModelID" class="control-label">Naziv modela</label></td>
+                    <td>
+                        <select style="height:40px" asp-for="ModelID" required
+                                oninvalid="this.setCustomValidity('Model je obavezan!')"
+                                oninput="this.setCustomValidity('')" class="form-control" asp-items="ViewBag.ModelID">
+                            <option></option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+                <div class="form-group">
+                    <input type="submit" value="Snimi" class="btn btn-primary" />
+                </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+﻿@model AutoServis.Models.VozilaPoslovnice
+
+<h4>Dodavanje</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" asp-controller="VozilaPoslovnice" asp-area="">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DatumUvoza" class="control-label">Datum uvoza</label>
+                <input asp-for="DatumUvoza" class="form-control" />
+                <span asp-validation-for="DatumUvoza" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PoslovnicaID" class="control-label">Poslovnica</label>
+                <select asp-for="PoslovnicaID" class ="form-control" asp-items="ViewBag.PoslovnicaID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="VoziloProdajaID" class="control-label"> Šifra automobila</label>
+                <select asp-for="VoziloProdajaID" class ="form-control" asp-items="ViewBag.VoziloProdajaID"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Sačuvaj" class="btn btn-primary" />
+                <a asp-action="Index"class="btn btn-default">Nazad na listu</a>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+</div>
+

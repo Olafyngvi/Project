@@ -1,0 +1,191 @@
+﻿@model AutoServis.Models.UpitiVozila
+
+<style>
+    .modalEmail {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modal-contentEmail {
+        background-color: #fefefe;
+        margin: 10% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 30%; /* Could be more or less, depending on screen size */
+    }
+
+    /* The Close Button */
+    .closeEmail {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .closeEmail:hover,
+        .closeEmail:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+</style>
+
+<div>
+ 
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Klijent
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ImeiPrezime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email):
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            Upit:
+        </dt>
+        <dd>
+            <b>@Html.DisplayFor(model => model.Text)</b>
+        </dd>
+        <dt>
+            Datum upita:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DatumVrijem)
+        </dd>
+        <dt>
+            Šifra automobila:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SifraAutomobila)
+        </dd>
+
+    </dl>
+</div>
+<div>
+    <a id="myBtnEmail" class="btn btn-primary" style="color:white">Odgovori</a>
+    <a  atribut="@Model.ID" class="btn btn-default procitano">Označi kao odgovoreno</a>
+    <a id="BtnNazda"  class="btn btn-default">Nazad</a>
+
+
+</div>
+
+<div id="myModalEmail" class="modalEmail">
+    <div class="modal-contentEmail">
+        <span class="closeEmail">&times; </span>
+
+        <form id="formica" action="/Upiti/PosaljiEmail">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <label asp-for="ImeiPrezime" class="control-label" >Ime i prezime:</label>
+                <input asp-for="ImeiPrezime" class="form-control"  readonly/>
+                <span asp-validation-for="ImeiPrezime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" name="email" class="control-label">Email:</label>
+                <input asp-for="Email" class="form-control" readonly/>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Poruka:</label>
+                <textarea name="poruka" required oninvalid="this.setCustomValidity('Unesite odgovor na upit!')" oninput="this.setCustomValidity('')" class="form-control"></textarea>
+
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Pošalji" class="btn btn-success" />
+            </div>
+        </form>
+
+
+
+
+
+
+
+
+    </div>
+
+</div>
+
+<script>
+    // Get the modal
+    var modalEmail = document.getElementById('myModalEmail');
+
+    // Get the button that opens the modal
+    var btnEmail = document.getElementById("myBtnEmail");
+
+    // Get the <span> element that closes the modal
+    var spanEmail = document.getElementsByClassName("closeEmail")[0];
+
+    // When the user clicks on the button, open the modal
+    btnEmail.onclick = function () {
+        modalEmail.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    spanEmail.onclick = function () {
+        modalEmail.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modalEmail) {
+            modalEmail.style.display = "none";
+        }
+    }
+
+    $("#BtnNazda").click(function (event) {
+
+        $.get("/Upiti/Index",
+            function (rez,status) { 
+                $("#samko").html(rez);
+            });
+    });
+    $(".procitano").click(function (event) {
+        var id = $(this).attr("atribut");
+        $.get("/Upiti/Procitano?="+id,
+            function (rez, status) {
+                $("#samko").html(rez);
+            });
+    });
+
+    $("form#formica").on('submit', function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            cache: false,
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function (data) {
+               
+                toastr.options.positionClass = 'toast-top-left';
+                toastr.options.timeOut = 3000;
+                toastr.info("Odgovor poslan!");
+                $.get("/Upiti/OU",
+                    function (rez, status) {
+
+                        $("#samko").html(rez);
+                    });
+            }
+        });
+
+    });
+
+</script>
+

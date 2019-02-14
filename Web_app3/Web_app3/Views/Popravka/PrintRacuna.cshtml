@@ -1,0 +1,143 @@
+﻿@model AutoServis.ViewModels.InformacijeRacuna
+
+@{
+    ViewData["Title"] = "Print računa";
+    double uk = 0;
+    double uk1 = 0;
+    Layout = null;
+}
+<button id="print" style="width:70%;height:7%;margin-left:260px;" class="btn btn-primary" onclick="printaj(); spremi();">Printaj račun</button>
+<div id="container" style="width:70%;height:1000px;background-color:whitesmoke;margin:0 auto;">
+    <br />
+    <center>
+        <h1>>AUTO KUĆA "NER"</h1>
+    </center>
+
+
+    <br />
+    <h3 style="display:inline;margin-left:460px;">
+        Poslovnica    " @Model.Poslovnica  "
+    </h3>
+
+    <br /><br /><br /> <center>
+        <h2>RAČUN ZA OBAVLJENU POPRAVKU</h2>
+    </center>
+    <br /><br /><br />
+    <form action="/Racun/SpremiRacun" method="post">
+        <div style="width:50%;height:20%;background-color:whitesmoke;float:left;padding:30px 15px;box-sizing:border-box;">
+            <p style="margin-bottom:20px;">
+                <b style="font-size:18px;">Datum popravke:   </b>
+                <input name="DatumPop" style="font-size:20px;float:right;font-weight:bold;border:none;background-color:inherit;" value="@Model.DatumPopravke" />
+                <input type="hidden" name="RacunID" value="@Model.racunID" />
+
+            </p>
+            <p style="margin-bottom:20px;">
+                <b style="font-size:18px;">Račun broj:   </b>
+                <input name="brRacuna" style="font-size:20px;float:right;font-weight:bold;border:none;background-color:inherit;" value="@Model.racunBroj" />
+
+            </p>
+            <p style="margin-bottom:20px;">
+                <b style="font-size:18px;">Popravka broj:   </b>
+                <b style="font-size:20px;float:right;">@Model.BrojPopravke</b>
+            </p>
+
+        </div>
+        <div style="width:50%;height:20%;background-color:whitesmoke;float:left;padding:10px 15px;box-sizing:border-box;">
+            <h4 style="">
+                Opis popravke :
+            </h4>
+            <div style="width:80%;height:80%;background-color:white;margin-left:50px;padding:10px 5px;box-sizing:border-box;margin-top:10px;">
+                @Model.OpisKvara
+
+            </div>
+
+        </div>
+        <div style="width:100%;height:auto;background-color:white;float:left;padding:20px 60px;box-sizing:border-box;">
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th><center>Naziv</center></th>
+                        <th><center>Cijena</center></th>
+                        <th><center>Kolicina</center></th>
+                        <th><center>Ukupno</center></th>
+
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var x in Model.ListaDijelova)
+                    {
+                        <tr>
+
+                            <td><center>@x.UtroseniDio</center></td>
+                            <td><center>@x.cijena.ToString("0.00")</center></td>
+                            <td><center>@x.kolicina</center></td>
+                            <td style="display:none;"><center>@(uk1 = x.kolicina * x.cijena) </center></td>
+                            <td><center>@uk1.ToString("0.00") KM</center></td>
+                        </tr>
+
+                    }
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><b>Ukupno: </b>  </td>
+                        <td><center><b style="font-size:23px;">@Model.suma.ToString("0.00")    </b> KM  </center></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><b>Cijena za ruke:</b></td>
+                        <td><center><b style="font-size:23px;">@Model.cijeaPop.ToString("0.00")    </b> KM  </center></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><center><b style="display:none;">@(uk = Model.cijeaPop + Model.suma)</b></center></td>
+
+                        <td><b>Ukupno za naplatiti:</b></td>
+                        <td><center><b style="font-size:23px;">@uk.ToString("0.00") </b> KM  </center></td>
+
+                    </tr>
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+        <input type="hidden" name="UkupnoSve" value="@uk" />
+
+        <input type="submit" id="spremiRacun" style="display:none;" />
+    </form>
+
+    <div style="width:100%;height:20%;background-color:whitesmoke;float:left;padding:30px 15px;box-sizing:border-box;">
+        <p>
+            Uposlenik:
+            <span>______________________</span>
+
+        </p>
+        <p style="margin-left:120px;">
+            @Model.Uposlenik
+        </p>
+
+    </div>
+</div>
+
+<script>
+
+    function spremi() {
+        var btn = document.getElementById("spremiRacun");
+        btn.click();
+    }
+
+    function printaj() {
+        var btn = document.getElementById("print");
+        btn.style.display = "none";
+        window.print();
+
+    }
+
+  
+
+</script>

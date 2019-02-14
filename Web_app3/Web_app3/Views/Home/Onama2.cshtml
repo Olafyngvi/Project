@@ -1,0 +1,36 @@
+﻿@using AutoServis.Helper
+
+@{
+    Uposlenik username = Context.GetLogiraniKorisnik();
+}
+@if (username == null || username.VrstaUposlenikaId==2)
+{
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+}
+
+<h2>O nama</h2>
+<hr style="height:3px;" />
+
+<br />
+<div style="width:56%;">
+    <p>
+        Auto-Kuća "NER" d.o.o. je preduzeće osnovano 2007. godine. Primarna djelatnost preduzeća je uvoz i prodaja rabljenih automobila iz Njemačke, Italije, Francuske, Belgije i ostalih tržišta zapadne Evrope. Sva vozila posjeduju certifikat o proizvođaču vozila, a pri kupovini dajemo garanciju na porijeklo i pređenu kilometražu vozila.
+    </p>
+    <br />
+
+    <p>
+        Preduzeće Auto-Kuća "NER" d.o.o. se bavi i iznajmljivanjem vozila samo za pravna lica, po izuzetno povoljnim uslovima.
+    </p>
+    <br />
+
+    <p>
+        Ako se odlučite posjetiti jedan od naših prodajnih salona, naše osoblje će Vam pružiti sve potrebne informacije i pomoći pri odabiru Vašeg vozila, a na usluzi smo svakog radnog dana od 08:30-19:00 i subotom od 08:30 do 16:30 sati.
+    </p>
+
+</div>
+<div style="width:44%; float:right; margin-top:-240px;box-shadow: 0 4px 8px rgba(0,0,0,.08)">
+    <img src="~/lib/logo/ezgif.com-add-text (1).jpg" />
+</div>
+

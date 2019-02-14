@@ -1,0 +1,99 @@
+﻿@model ReflectionIT.Mvc.Paging.PagingList<AutoServis.Models.Model>
+@using ReflectionIT.Mvc.Paging
+
+<center><h2>Modeli</h2></center>
+<div style="margin-left:2%">
+    <div class="form-inline">
+        <a asp-controller="Order" asp-action="Index" class="btn btn-primary btn-sm">
+            <span class="glyphicon glyphicon-arrow-left"></span>
+        </a>
+        <a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#novi" asp-action="Dodaj" style="margin-left:2px" class="btn btn-primary btn-sm">
+            <span class="glyphicon glyphicon-plus"></span>Dodaj
+        </a>
+        <form method="get" class="form-inline" style="margin-left:20px">
+            <input name="search" class="form-control" placeholder="Pretraga"
+                   value="@Model.RouteValue["Filter"]" style="height:40px" />
+            <button type="submit" class="btn btn-primary btn-sm">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Pretrazi
+            </button>
+        </form>
+    </div>
+    <table id="modeli" class="table table-bordered table-condensed table-striped table-hover table-responsive-sm"
+           style="box-shadow: 0 4px 8px rgba(0,0,0,.08);width:80%">
+        <thead>
+            <tr>
+                <th>
+                    @Html.SortableHeaderFor(model => model.Naziv, this.Model)
+                </th>
+                <th>
+                    @Html.SortableHeaderFor(model => model.marka.Nazvi, this.Model)
+                </th>
+                <th><center>Akcija</center></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Naziv)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.marka.Nazvi)
+                    </td>
+                    <td style="width:200px">
+                        <center>
+                            <a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#novi" asp-controller="Model" asp-action="Edit" asp-route-id="@item.ModelId" class="btn btn-primary btn-xs">Uredi</a>
+                            <a class="btn btn-primary btn-xs js-obrisi" naziv="@item.Naziv" atribut="@item.ModelId" id="js-obrisi">Obriši</a>
+                        </center>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <nav>
+        @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model })
+    </nav>
+    <div id="novi">
+
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#modeli .js-obrisi").on("click", function () {
+            toastr.options.positionClass = 'toast-bottom-left';
+            var button = $(this);
+            bootbox.confirm({
+                title: "Brisanje Modela ?",
+                message: "Da li zelite da obrišete " + button.attr("naziv") + " ?",
+                buttons: {
+                    cancel: {
+                        label: '<i class="fa fa-times"></i> Ne'
+                    },
+                    confirm: {
+                        label: '<i class="fa fa-check"></i> Da'
+                    }
+                },
+                callback: function (result) {
+                    if (result == true) {
+                        $.ajax({
+                            url: "brisi/" + button.attr("atribut"),
+                            method: "Delete",
+                            success: function () {
+                                toastr.success("Model uspjesno izbrisan .", "Obavijest :");
+                                setTimeout(function () {
+                                    window.location.replace('Index');
+                                }, 2000);
+
+                            },
+                            error: function () {
+                                toastr.error("Nešto neočekivano se degodilo!", "Obavijest :");
+                            }
+                        })
+                    };
+                }
+            });
+        })
+    })
+</script>
+

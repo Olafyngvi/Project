@@ -1,0 +1,265 @@
+﻿.test-kina {
+    color: slategrey;
+}
+
+#nesa {
+    margin: 0;
+}
+
+.test-kina:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+
+.modalLogin {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-contentLogin {
+    background-color: #fefefe;
+    margin: 10% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.closeLogin {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+    .closeLogin:hover,
+    .closeLogin:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+.inputi {
+    border-radius: 9px;
+}
+
+.modalDialog {
+    position: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 99999;
+    opacity: 0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+}
+
+    .modalDialog:target {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .modalDialog > div {
+        width: 310px;
+        position: relative;
+        margin: 10% auto;
+        padding: 5px 20px 13px 20px;
+        border-radius: 10px;
+        background: #fff;
+        background: -moz-linear-gradient(#fff, #999);
+        background: -webkit-linear-gradient(#fff, #999);
+        background: -o-linear-gradient(#fff, #999);
+    }
+
+.close {
+    background: #606061;
+    color: #FFFFFF;
+    line-height: 25px;
+    position: absolute;
+    right: -12px;
+    text-align: center;
+    top: -10px;
+    width: 24px;
+    text-decoration: none;
+    font-weight: bold;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    -moz-box-shadow: 1px 1px 3px #000;
+    -webkit-box-shadow: 1px 1px 3px #000;
+    box-shadow: 1px 1px 3px #000;
+}
+
+    .close:hover {
+        background: #00d9ff;
+    }
+
+.modalDialog2 {
+    position: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 99999;
+    opacity: 0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+}
+
+    .modalDialog2:target {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .modalDialog2 > div {
+        width: 310px;
+        position: relative;
+        margin: 1% auto;
+        padding: 5px 20px 13px 20px;
+        border-radius: 10px;
+        background: #fff;
+        background: -moz-linear-gradient(#fff, #999);
+        background: -webkit-linear-gradient(#fff, #999);
+        background: -o-linear-gradient(#fff, #999);
+    }
+
+
+
+
+
+
+.sadrzaj {
+    margin: auto;
+    width: 1232px;
+}
+
+.menu {
+    width: 100%;
+    position: relative;
+    z-index: 101;
+}
+
+    .menu ul li a, .menu ul li a:visited {
+        font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+        color: #fff;
+        display: block;
+        text-align: center;
+        font-size: 17px;
+        line-height: 65px;
+        width: auto;
+        padding-right: 20px;
+        padding-left: 20px;
+        font-weight: 700;
+        text-transform: uppercase;
+        transition-duration: 0.8s;
+    }
+
+    .menu ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+        .menu ul li {
+            float: left;
+            position: relative;
+        }
+
+            .menu ul li ul {
+                display: none;
+            }
+
+            /* specific to non IE browsers */
+            .menu ul li:hover a {
+                color: #FFF;
+                background-color: #d2232a;
+                box-shadow: 0px 3px 0px #d2232a;
+                transition-duration: 0.3s;
+            }
+
+
+.menu_selected {
+    color: #FFF;
+    background-color: #d2232a;
+    box-shadow: 0px 3px 0px #d2232a;
+    transition-duration: 0.3s;
+}
+
+
+
+.menu ul li:hover ul {
+    display: block;
+    position: absolute;
+    left: 0px;
+}
+
+    .menu ul li:hover ul li a.hide {
+        background: #6a3;
+        color: #fff;
+    }
+
+    .menu ul li:hover ul li:hover a.hide {
+        color: #000;
+        background-color: #F00;
+    }
+
+    .menu ul li:hover ul li ul {
+        display: none;
+    }
+
+    .menu ul li:hover ul li a {
+        background-color: #000;
+        height: 35px;
+        color: #fff;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+        font-size: 11px;
+        line-height: 35px;
+        width: 150px;
+        padding-left: 25px;
+        font-weight: 700;
+    }
+
+        .menu ul li:hover ul li a:hover {
+            color: #FFF;
+            background-color: #d2232a;
+        }
+
+    .menu ul li:hover ul li:hover ul {
+        display: block;
+        left: 146px;
+        top: 0px;
+    }
+
+        .menu ul li:hover ul li:hover ul.left {
+            left: 50px;
+        }
+
+.poruka {
+    color: white;
+    float: right;
+    font-style: italic;
+    margin-top: 9px;
+    font-size: 25px;
+    text-align: center;
+}

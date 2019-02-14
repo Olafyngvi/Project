@@ -1,0 +1,170 @@
+﻿@model Order
+
+@{ var sPopustom = ViewBag.Total * 0.9;
+    var sPostarinom = ViewBag.Total + 10;
+ }
+<h3 style="margin-left:20%">Dijeli vas jos jedan korak do kupovine dijelova.</h3>
+<hr />
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-4" style="box-shadow: 0 4px 8px rgba(0,0,0,.08)">
+        <form asp-action="Checkout" method="post" class="form-horizontal" role="form">
+            <div class="form-group">
+                <label asp-for="Ime" class="col-md-2 control-label"></label>
+                <div class="col-md-7">
+                    <input asp-for="Ime" required
+                           oninvalid="this.setCustomValidity('Ime je obavezno!')"
+                           oninput="this.setCustomValidity('')" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Prezime" class="col-md-2 control-label"></label>
+                <div class="col-md-7">
+                    <input asp-for="Prezime" required
+                           oninvalid="this.setCustomValidity('Prezime je obavezno!')"
+                           oninput="this.setCustomValidity('')" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Adresa" class="col-md-2 control-label"></label>
+                <div class="col-md-7">
+                    <input asp-for="Adresa" required
+                           oninvalid="this.setCustomValidity('Adresa je obavezna!')"
+                           oninput="this.setCustomValidity('')" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ZipCode" class="col-md-2 control-label"></label>
+                <div class="col-md-7">
+                    <input asp-for="ZipCode" required
+                           oninvalid="this.setCustomValidity('Zip code je obavezan!')"
+                           oninput="this.setCustomValidity('')" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Grad" class="col-md-2 control-label"></label>
+                <div class="col-md-7">
+                    <input asp-for="Grad" required
+                           oninvalid="this.setCustomValidity('Naziv grada je obavezan!')"
+                           oninput="this.setCustomValidity('')" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Drzava" class="col-md-2 control-label"></label>
+                <div class="col-md-7">
+                    <input asp-for="Drzava" required
+                           oninvalid="this.setCustomValidity('Naziv države je obavezan!')"
+                           oninput="this.setCustomValidity('')" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">Broj telefona</label>
+                <div class="col-md-7">
+                    <input asp-for="BrojTelefona" type="tel" required placeholder="3876xxxxxxx"
+                           oninvalid="this.setCustomValidity('Telefon je obavezan!')"
+                           oninput="this.setCustomValidity('')" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Email" class="col-md-2 control-label"></label>
+                <div class="col-md-7">
+                    <input asp-for="Email" type="email" required
+                           oninvalid="this.setCustomValidity('Mail je obavezan!')"
+                           oninput="this.setCustomValidity('')" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="btn-group col-md-offset-2 col-md-8">
+                    <input class="btn btn-primary" type="submit" value="Naruci" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="col-md-4" style="box-shadow: 0 4px 8px rgba(0,0,0,.08)">
+        <h3>Sadržaj korpe : </h3>
+        <table class="table table-responsive">
+            <colgroup>
+                <col class="col-md-4">
+                <col class="col-md-4">
+                <col class="col-md-4">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>
+                        Naziv
+                    </th>
+                    <th>
+                        Količina
+                    </th>
+                    <th>
+                        Cijena
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ViewBag.Items != null)
+                {@foreach (var item in ViewBag.Items)
+                    {
+                        <tr>
+                            <td>
+                                <h3>@item.Dio.Naziv</h3>  <small>@item.Dio.model.marka.Nazvi @item.Dio.model.Naziv </small>
+                            </td>
+                            <td>@item.Amount</td>
+                            <td>
+                                @(item.Amount * item.Dio.Cijena)KM
+                            </td>
+                        </tr>
+                    }}
+
+                @if (ViewBag.Total <= 100 && ViewBag.Items.Count!=0)
+                {
+                    <tr class="active">
+                        <td colspan="2">Poštarina</td>
+                        <td>10KM</td>
+                    </tr>
+                }
+                <tr class="active" style="border-top:solid">
+
+                    <td>Ukupno : </td>
+                    <td colspan="2">
+                            @if (ViewBag.Total <= 100 && ViewBag.Items.Count != 0)
+                            {
+                                @sPostarinom
+                            }
+                            else if (ViewBag.Total > 200)
+                            {@sPopustom}
+                        else
+                        {@ViewBag.Total}KM
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <ul>
+                            <li>
+                                <small><i class="glyphicon glyphicon-info-sign"></i></small>
+                            </li>
+                            <li>
+                                <small><br />Na iznos od preko 200 KM ostvarujete popust od 10%.</small>
+                            </li>
+                            <li>
+                                <small>Poštarina prema svim gradovima iznosi 10 KM, a za narudžbe preko 100 KM je besplatna.</small>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+
+</script>

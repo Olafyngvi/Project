@@ -1,0 +1,58 @@
+﻿@model IEnumerable<AutoServis.Models.KontaktUpiti>
+
+<div class="table-responsive"style="margin-left:2%">
+    <h2>Odgovoreni upiti</h2>
+    <table class="table table-striped table-bordered table-hover table-condenseds" style="box-shadow: 0 4px 8px rgba(0,0,0,.08)">
+        <thead>
+            <tr>
+                <th>
+                    Ime i prezime
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Poruka)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Pregledano)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ImePrezime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Poruka)
+                    </td>
+                    <td>
+                        @if (item.Pregledano == true)
+                        {
+                            @Html.DisplayName("DA")
+
+
+                        }
+                        else
+                        {
+                            @Html.DisplayName("NE")
+
+
+                        }
+
+                    </td>
+                    <td></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div id="content">
+
+</div>

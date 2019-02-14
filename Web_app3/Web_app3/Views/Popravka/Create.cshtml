@@ -1,0 +1,140 @@
+﻿@model AutoServis.Models.Popravke
+
+@{
+    var imeUp = ViewData["ime"];
+    var poslovnica = ViewData["poslovnica"];
+}
+
+
+
+<div class="row">
+    <div class="col-md-10" style="float:left;margin-top:30px;">
+        <div style="height:25%;width:100%;padding:20px 40px;box-sizing:border-box;">
+            <p style="font-size:1.5em;display:inline;margin-right:20px;">Uposlenik: </p>
+            <p style="font-size:2.5em;display:inline;margin-right:300px;"> @imeUp</p>
+            <p style="font-size:1.5em;display:inline;margin-right:20px;">Poslovnica:</p>
+            <p style="font-size:2.3em;display:inline;">@poslovnica</p>
+
+        </div>
+        <hr />
+
+        <h1>Dodavanje popravke</h1>
+
+        <form asp-action="DodajPopravku" method="post">
+
+            <div class="col-md-6" style="padding:20px 40px;box-sizing:border-box;">
+                <h2 style="margin-bottom:10px;">Informacije o popravci</h2>
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="input-group input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-lg" style="font-size:1.3em;">Opis kvara</span>
+                    </div>
+                    <input type="text" class="form-control" name="OpisKvara" aria-label="Sizing example input" style="font-size:1.3em;" aria-describedby="inputGroup-sizing-lg">
+                </div>
+                <br />
+                <div class="input-group input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-lg" style="font-size:1.3em;">Cijena popravke</span>
+                    </div>
+                    <input type="text" class="form-control" name="CijenaPopravke" aria-label="Sizing example input" style="font-size:1.3em;" aria-describedby="inputGroup-sizing-lg" required/>
+                </div>
+                <br />
+                <div class="input-group input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-lg" style="font-size:1.3em;">Datum popravke</span>
+                    </div>
+                    <input type="date" class="form-control" name="Datum" aria-label="Sizing example input" style="font-size:1.3em;" aria-describedby="inputGroup-sizing-lg" required/>
+                </div>
+
+
+            </div>
+            <div class="col-md-6" style="padding:20px 40px;box-sizing:border-box;">
+                <h2 style="margin-bottom:10px;">Informacije o automobilu</h2>
+                <div class="input-group input-group-lg">
+                    <div class="input-group-prepend ">
+                        <label class="input-group-text" style="font-size:1.3em;" for="inputGroupSelect01">Marka</label>
+                    </div>
+                    <select style="height:50px;font-size:1.3em;" class="form-control" name="MarkaID" id="marka" asp-items="ViewBag.MarkaID" required>
+                        <option selected>Odaberi</option>
+
+                    </select>
+                </div>
+                <br />
+
+                <div class="input-group input-group-lg">
+                    <div class="input-group-prepend ">
+                        <label class="input-group-text" style="font-size:1.3em;" for="inputGroupSelect01">Model</label>
+                    </div>
+                    <select style="height:50px;font-size:1.3em;display:none;" class="form-control" name="ModelID" id="model" asp-items='@new SelectList(string.Empty,"ModelId","Naziv")' required>
+                        <option selected>Odaberi</option>
+
+                    </select>
+                </div>
+                <br />
+
+                <div class="input-group input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-lg" style="font-size:1.3em;">Godina </span>
+                    </div>
+                    <input type="number" class="form-control" min="1900" max="2018" step="1" value="2000" name="godinaPr" aria-label="Sizing example input" style="font-size:1.3em;" aria-describedby="inputGroup-sizing-lg">
+                </div>
+                <br />
+
+                <div class="input-group input-group-lg">
+                    <div class="input-group-prepend ">
+                        <label class="input-group-text" style="font-size:1.3em;" for="inputGroupSelect01">Gorivo</label>
+                    </div>
+                    <select style="height:50px;font-size:1.3em;" class="form-control" name="Gorivo" id="gorivo" asp-items="ViewBag.Gorivo" required>
+                        <option selected>Odaberi</option>
+
+                    </select>
+                </div>
+
+            </div>
+
+
+
+
+
+            <button class="btn btn-default" style="width:180px;height:70px;font-size:1.3em;" asp-action="Index"><< Back to List</button>
+
+            <input type="submit" style="width:150px;height:70px;font-size:1.5em;" value="Dalje >>" class="btn btn-primary " />
+
+        </form>
+    </div>
+</div>
+
+
+<script>
+    $(function () {
+
+
+
+        $("#marka").change(function () {
+            var id = $(this).children(":selected").attr("value");
+            if (id != "") {
+                $.getJSON("/Popravka/VratiModele?id=" + id, function (rez) {
+                    var items = '';
+                    $("#model").empty();
+                    $.each(rez, function (i, red) {
+                        items += "<option value='" + red.value + "'>" + red.text + "</option>"
+
+                    });
+                    $("#model").html(items);
+                });
+                var model = document.getElementById("model");
+                model.style.display = "block";
+
+
+
+            }
+            else {
+                var model = document.getElementById("model");
+                model.style.display = "none";
+
+            }
+        });
+    });
+</script>

@@ -1,0 +1,78 @@
+﻿@model AutoServis.ViewModels.PripremaRacunaVM
+@{
+    double suma = 0;
+    double temp = 0;
+    Layout = "_Layout";
+
+}
+
+<h2 style="margin-left:10px;">Dodane stavke</h2>
+<table class="table table-active">
+    <thead>
+        <tr>
+
+            <th><center><b>Dio</b></center></th>
+            <th><center><b>Cijena po kom.</b></center></th>
+            <th><center><b>Količina</b></center></th>
+            <th><center><b>Cijena ukupno</b></center></th>
+            <th><center><b>Akcija</b></center></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var x in Model.lista)
+        {
+
+        <tr>
+
+            <td style="font-size:1.3em;"><center>@x.UtroseniDio</center></td>
+            <td style="font-size:1.3em;"><center>@x.cijena</center></td>
+            <td style="font-size:1.3em;"><center>@x.kolicina</center></td>
+            <td style="font-size:1.3em;"><center>@(x.cijena * x.kolicina)</center></td>
+            <td style="display:none;">@(suma += x.cijena * x.kolicina)</td>
+
+            
+
+
+        </tr>
+
+
+        }
+       
+    </tbody>
+</table>
+<div style="bottom:0;position:relative; width:100%;height:40px;background-color:lightgray;float:left;">
+
+    <div id="uCijena" style="width:40%;height:100%;float:right;padding-top:5px;box-sizing:border-box;text-align:center;">
+        <form asp-action="Racun" method="post">
+
+            <input id="sumPrikaz" name="sumPrikaz" style="float:left;width:120px;border:none;font-size:20px;padding-left:20px;box-sizing:border-box; background-color:lightgray;" value="@suma.ToString("0.00") KM" readonly />
+            <input id="sum" name="sum" style="display:none;" value="@suma"  />
+
+            <input type="hidden" name="rajdi" value="@Model.racunID" />
+            <input type="hidden" name="OpisK" value="@Model.OpisKvara" />
+            <input type="hidden" name="popravkaID" value="@Model.PopravkaID" />
+            <input type="hidden" name="poslovnica" value="@Model.Poslovnica" />
+            <input type="hidden" name="datum" value="@Model.DatumPopravke" />
+            <input type="hidden" name="uposlenik" value="@Model.Uposlenik" />
+
+
+            <input type="hidden" name="BrPopravke" value="@Model.brojPopravke" />
+            <input type="hidden" name="stavkaID" value="@Model.stavkaRacunaID" />
+            <input type="hidden" name="cijenaRuku" value="@Model.cijenaPop" />
+
+            <input id="PrintRacuna" type="submit" style="display:none;float:left;width:110px;height:30px;float:right;" value="Printaj račun" />
+
+        </form>
+        
+    </div>
+    <p style="margin:5px 20px;float:right;color:black;">Ukupno:</p>
+</div>
+
+<script>
+    function primjena() {
+        var btn = document.getElementById("PrintRacuna");
+        btn.click();
+    }
+   
+    
+</script>

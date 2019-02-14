@@ -1,0 +1,1046 @@
+﻿@using Microsoft.AspNetCore.Http
+@using AutoServis.Helper
+
+@model AutoServis.ViewModels.PocetnaVM
+
+@{
+
+    Uposlenik uposlenik = Context.GetLogiraniKorisnik();
+}
+
+<style>
+
+    .modalDialog {
+        position: fixed;
+        font-family: Arial, Helvetica, sans-serif;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 99999;
+        opacity: 0;
+        -webkit-transition: opacity 400ms ease-in;
+        -moz-transition: opacity 400ms ease-in;
+        transition: opacity 400ms ease-in;
+        pointer-events: none;
+    }
+
+        .modalDialog:target {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modalDialog > div {
+            width: 400px;
+            position: relative;
+            margin: 10% auto;
+            padding: 5px 20px 13px 20px;
+            border-radius: 10px;
+            background: #fff;
+            background: -moz-linear-gradient(#fff, #999);
+            background: -webkit-linear-gradient(#fff, #999);
+            background: -o-linear-gradient(#fff, #999);
+        }
+
+    .close {
+        background: #606061;
+        color: #FFFFFF;
+        line-height: 25px;
+        position: absolute;
+        right: -12px;
+        text-align: center;
+        top: -10px;
+        width: 24px;
+        text-decoration: none;
+        font-weight: bold;
+        -webkit-border-radius: 12px;
+        -moz-border-radius: 12px;
+        border-radius: 12px;
+        -moz-box-shadow: 1px 1px 3px #000;
+        -webkit-box-shadow: 1px 1px 3px #000;
+        box-shadow: 1px 1px 3px #000;
+    }
+
+        .close:hover {
+            background: #00d9ff;
+        }
+</style>
+
+<div id="preloader">
+    <div class="loader"></div>
+</div>
+
+    <div class="page-container">
+        <div class="sidebar-menu">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <a asp-action="Index" asp-controller="Home" asp-area=""><img src="~/lib/logo/logo-novi.png" alt="logo" style="height:100px;"></a>
+                </div>
+            </div>
+            <div class="main-menu" style="width:230px;height:600px;">
+                <div class="menu-inner">
+                    <nav>
+                        <ul class="metismenu" id="menu">
+                            <li>
+                                <a href="javascript:void(0)" aria-expanded="true"><i style="color:#2E74AE" class="ti-car"></i><span>Vozila</span></a>
+                                <ul class="collapse">
+                                    <li>
+                                        <a ajax-poziv="da" url="/MenadžerAutomobila/Index" class="test-kina" id="vozila">
+                                            <p id="nesa" class="test-kina">Pregled Vozila</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="test-kina" href="#openModal2">
+                                            <p id="nesa" class="test-kina ti-plus">Dodaj vozilo</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ajax-poziv="da" url="/MenadžerAutomobila/IndexProdanih" class="test-kina" id="vozila">
+                                            <p id="nesa" class="test-kina">Prodana Vozila</p>
+                                        </a>
+                                    </li>
+
+
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" aria-expanded="true"><i style="color:#2E74AE" class="ti-cloud"></i><span>Marke</span></a>
+                                <ul class="collapse">
+                                    <li>
+                                        <a ajax-poziv="da" url="/MenadžerAutomobila/IndexMarka" class="test-kina" id="marke">
+                                            <p id="nesa" class="test-kina">Pregled Marki</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="test-kina" href="#openModal1">
+                                            <p id="nesa" class="test-kina ti-plus">Dodaj marku</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" aria-expanded="true"><i style="color:#2E74AE" class="ti-cloud-up"></i><span>Modeli</span></a>
+                                <ul class="collapse">
+                                    <li>
+                                        <a ajax-poziv="da" url="/MenadžerAutomobila/IndexModel" class="test-kina" id="modeli">
+                                            <p id="nesa" class="test-kina">Pregled modela</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="test-kina" href="#openModal3">
+                                            <p class="test-kina ti-plus">Dodaj model</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" aria-expanded="true"><i style="color:#2E74AE" class="ti-cloud-down"></i><span>Tipovi vozila</span></a>
+                                <ul class="collapse">
+                                    <li>
+                                        <a ajax-poziv="da" url="/MenadžerAutomobila/IndexTip" class="test-kina" id="tipovi">
+                                            <p id="nesa" class="test-kina">Pregled tipova</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="test-kina" href="#openModal4">
+                                            <p class="test-kina ti-plus">Dodaj tip</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" aria-expanded="true"><i style="color:#2E74AE" class="ti-anchor"></i><span>Goriva</span></a>
+                                <ul class="collapse">
+                                    <li>
+                                        <a ajax-poziv="da" url="/MenadžerAutomobila/IndexGorivo" class="test-kina" id="goriva">
+                                            <p id="nesa" class="test-kina">Pregled goriva</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="test-kina" href="#openModal5">
+                                            <p class="test-kina ti-plus">Dodaj gorivo</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" aria-expanded="true"><i style="color:#2E74AE" class="ti-control-record"></i><span>Transmisije</span></a>
+                                <ul class="collapse">
+                                    <li>
+                                        <a ajax-poziv="da" url="/MenadžerAutomobila/IndexTransmisija" class="test-kina" id="transmisije">
+                                            <p id="nesa" class="test-kina">Pregled transmisija</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="test-kina" href="#openModal6">
+                                            <p class="test-kina ti-plus">Dodaj transmisiju</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" aria-expanded="true"><i style="color:#2E74AE" class="ti-hand-drag"></i><span>Broj vrata</span></a>
+                                <ul class="collapse">
+                                    <li>
+                                        <a ajax-poziv="da" url="/MenadžerAutomobila/IndexVrata" class="test-kina" id="vrata">
+                                            <p id="nesa" class="test-kina">Pregled vrata</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="test-kina" href="#openModal7">
+                                            <p class="test-kina ti-plus">Dodaj vrata</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" aria-expanded="true"><i style="color:#2E74AE" class="ti-bookmark"></i><span>Oprema</span></a>
+                                <ul class="collapse">
+                                    <li>
+                                        <a ajax-poziv="da" url="/MenadžerAutomobila/IndexOprema" class="test-kina" id="oprema">
+                                     
+                                            <p id="nesa" class="test-kina">Pregled opreme</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="test-kina" href="#openModal8">
+                                            <p class="test-kina ti-plus">Dodaj opremu</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" aria-expanded="true"><i style="color:#2E74AE" class="ti-printer"></i><span>Izvještaji</span></a>
+                                <ul class="collapse">
+                                    <li>
+                                        <a ajax-poziv="da" url="/MenadžerAutomobila/ReportPregledi" class="test-kina" id="oprema">
+                                            <p id="nesa" class="test-kina">Broj pregleda vozila</p>
+                                        </a>
+                                    </li>
+
+
+                                </ul>
+                            </li>
+
+
+
+
+
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="header-area">
+
+
+
+                <h2 class="enes">Menadžer automobila - @uposlenik.Osoba.Ime @uposlenik.Osoba.Prezime </h2>
+
+                <div class="dropdown">
+                    <i class="fa fa-envelope-o "></i>
+                    <a class="dropdown-toggle test-kina" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Pošta
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a ajax-poziv="da" url="/Upiti/Index" class="dropdown-item" href="javascript:void(0)">Nove poruke  (@Model.broj)</a>
+                        <a ajax-poziv="da" url="/Upiti/OU" class="dropdown-item" href="javascript:void(0)">Odgovorene poruke</a>
+
+                    </div>
+
+                </div>
+
+
+
+
+
+
+
+
+
+            </div>
+            <div id="samko" style="overflow:scroll;width:100%;height:590px;">
+
+                <div class="table-responsive" id="inbox">
+
+                    <table class="table table-striped table-bordered table-hover table-condensed">
+                        <h2>Novi upiti</h2>
+                        <thead>
+                            <tr>
+                                <th>
+                                    Ime i prezime
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    Datum upita
+                                </th>
+
+                                <th>
+                                    Akcije
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.upitiVozila)
+                            {
+                                <tr>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ImeiPrezime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Email)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DatumVrijem)
+                                    </td>
+                                    <td>
+
+                                        <a atribut="@item.ID" style="color:white" class="btn btn-primary btn-xs btnOdg">Odgovori</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+    <div id="openModal1" class="modalDialog">
+        <div>
+            <a id="cloSe" href="#close" title="Close" class="close">X</a>
+            <h2>Dodavanje marke</h2>
+
+            <hr />
+            <div class="row" style="width:900px">
+                <div class="col-md-4">
+                    <form ajax-poziv="da" action="/MenadžerAutomobila/SnimiMarka" ajax-partial="/MenadžerAutomobila/IndexMarka" tip-modala="openModal1">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <a id="cloSe" href="#close" title="Close" class="close" hidden>X</a>
+                            <input class="form-control inputi" name="marka" placeholder="Unesite naziv marke" required oninvalid="this.setCustomValidity('Unesite naziv marke!')"
+                                   oninput="this.setCustomValidity('')" />
+                            <span class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+
+                            <input type="submit" value="Sačuvaj" id="klikno" href="close" class="btn btn-primary" />
+
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="openModal2" style="height:100%; overflow-x:scroll" class="modalDialog2">
+        <div>
+            <a href="#close" title="Close" class="close">X</a>
+            <div class="row">
+
+                <form id="fauta" asp-action="Snimi" asp-controller="MenadžerAutomobila" asp-area="" style="margin-left:5px" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <h4>Dodavanje Vozila</h4>
+
+                    <hr />
+                    <div class="row col-md-6">
+                        <div class="form-group" style="width:350px;">
+                            <label style="width:30%"><b>Datum uvoza:</b></label> <input id="datum" name="datum" placeholder="Datum uvoza" style="width:70%;float:right;" class="form-control inputi" type="date" />
+                        </div>
+                        <div class="form-group" style="width:350px;">
+                            <label style="width:30%"><b>Datum proizvodnje:</b></label><input id="datum2" name="DatumProizvodnje" style="width:70%;float:right;" required oninvalid="this.setCustomValidity('Datum proizvodnje je obavezan!')"
+                                                                                             oninput="this.setCustomValidity('')" placeholder="Unesite datum proizvodnje" type="date" class="form-control inputi" />
+                            <span class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group" style="width:350px;">
+                            <label style="width:30%"><b>Kilometraža:</b> </label>  <input id="kilo" name="Kilometraza" style="width:70%;float:right;" required oninvalid="this.setCustomValidity('Kilometraža je obavezna!')"
+                                                                                          oninput="this.setCustomValidity('')" placeholder="Unesite kilometražu" class="form-control inputi" />
+                            <span class="text-danger"></span>
+                            <div id="error4" class="alert alert-warning">
+                                <strong>Upozorenje!</strong> Kilometraža ne smije sadržavati tekstualne karaktere!
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="width:350px;">
+                            <label style="width:30%"><b> Kubikaža:</b></label>    <input name="Kubikaza" id="kubik" style="width:70%;float:right;" required oninvalid="this.setCustomValidity('Kubikaža je obavezna!')"
+                                                                                         oninput="this.setCustomValidity('')" placeholder="Unesite kubikažu" class="form-control inputi" />
+                            <span class="text-danger"></span>
+                            <div id="error1" class="alert alert-warning">
+                                <strong>Upozorenje!</strong> Kubikaža ne smije sadržavati tekstualne karaktere!
+                            </div>
+                        </div>
+                        <div class="form-group" style="width:350px;">
+                            <label style="width:30%"><b>Snaga motora:</b></label>      <input name="SnagaMotora" id="snaga" style="width:70%;float:right;" required oninvalid="this.setCustomValidity('Snaga motora je obavezna!')"
+                                                                                              oninput="this.setCustomValidity('')" placeholder="Unesite snagu motora" class="form-control inputi" />
+                            <span class="text-danger"></span>
+                            <div id="error2" class="alert alert-warning">
+                                <strong>Upozorenje!</strong> Snaga motora ne smije sadržavati tekstualne karaktere!
+                            </div>
+                        </div>
+                        <div class="form-group" style="width:350px;">
+                            <label style="width:30%"><b>Cijena:</b></label>     <input id="cijena" name="Cijena" style="width:70%;float:right;" required oninvalid="this.setCustomValidity('Cijena je obavezna!')"
+                                                                                       oninput="this.setCustomValidity('')" placeholder="Unesite cijenu" class="form-control inputi" />
+                            <span class="text-danger"></span>
+                            <div id="error3" class="alert alert-warning">
+                                <strong>Upozorenje!</strong> Cijena vozila ne smije sadržavati tekstualne karaktere!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-md-6" style="margin-left:-10px;float:right">
+
+                        <div class="form-group" style="width:350px;">
+                            <label style="width:30%"><b>Odaberite model:</b></label>    <select id="model" name="ModelID" style="height:35px;width:70%;float:right;" required oninvalid="this.setCustomValidity('Model je obavezan!')"
+                                                                                                oninput="this.setCustomValidity('')" class="form-control inputi" asp-items='@new SelectList(string.Empty,"ID","Naziv")'></select>
+                        </div>
+                        <div class="form-group" style="width:350px;">
+                            <label style="width:30%"><b>Odaberite broj vrata:</b></label>    <select id="brVrt" name="BrojVrataID" style="height:35px;width:70%;float:right;" required oninvalid="this.setCustomValidity('Broj vrata je obavezan!')"
+                                                                                                     oninput="this.setCustomValidity('')" class="form-control inputi" asp-items="ViewBag.BrojVrataID"></select>
+                        </div>
+                        <div class="form-group" style="width:350px;">
+                            <label style="width:30%"><b>Odaberite tip:</b></label>     <select id="tip" name="TipVozilaID" style="height:35px;width:70%;float:right;" required oninvalid="this.setCustomValidity('Tip vozila je obavezan!')"
+                                                                                               oninput="this.setCustomValidity('')" class="form-control inputi" asp-items="ViewBag.TipVozilaID"></select>
+                        </div>
+                        <div class="form-group" style="width:350px;">
+                            <label style="width:30%"><b>Odaberite opremu:</b></label>      <select id="opremu" name="OpremaID" style="height:35px;width:70%;float:right;" required oninvalid="this.setCustomValidity('Oprema je obavezna!')"
+                                                                                                   oninput="this.setCustomValidity('')" class="form-control inputi" asp-items='@new SelectList(string.Empty,"OpremaId","Naziv")'></select>
+                        </div>
+
+                        <div class="form-group" style="width:350px;">
+                            <label style="width:30%"><b>Odaberite gorivo:</b></label>     <select id="gorivo" name="GorivoID" style="height:35px;width:70%;float:right;" required oninvalid="this.setCustomValidity('Gorivo je obavezno!')"
+                                                                                                  oninput="this.setCustomValidity('')" class="form-control inputi" asp-items="ViewBag.GorivoID"></select>
+                        </div>
+
+                        <div class="form-group" style="width:350px;">
+                            <label style="width:30%"><b>Odaberite transmisiju:</b></label>    <select id="trans" name="TransmisijaID" style="height:35px;width:70%;float:right;" required oninvalid="this.setCustomValidity('Transmisija je obavezna!')"
+                                                                                                      oninput="this.setCustomValidity('')" class="form-control inputi" asp-items="ViewBag.TransmisijaID"></select>
+                        </div>
+
+                        <div class="form-group" style="width:350px;">
+                            <label style="width:30%"><b>Odaberite poslovnicu:</b></label>     <select id="poslovnica" name="poslovnica" style="height:35px;width:70%;float:right;" required oninvalid="this.setCustomValidity('Poslovnica je obavezna!')"
+                                                                                                      oninput="this.setCustomValidity('')" class="form-control inputi" asp-items="ViewBag.PoslovnicaID"></select>
+                        </div>
+
+                        <div class="form-group" style="width:350px;">
+
+                            <label style="width:30%"><b>Odaberite naslovnu sliku:</b></label> <input id="slika" name="Slika" style="width:70%;float:right;" type="file" required oninvalid="this.setCustomValidity('Slika je obavezna!')"
+                                                                                                     oninput="this.setCustomValidity('')" placeholder="Odaberite sliku" class="form-control inputi" />
+                        </div>
+                    </div>
+                    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    <div id="btnPoruka">
+                        <p><b>Unesite sva tražena polja da bi spremili zapise!</b></p>
+                    </div>
+                    <div class="form-group" id="autic">
+                        <input type="submit" style="width:100%"  value="Snimi" class="btn btn-primary" />
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div id="openModal3" class="modalDialog">
+        <div>
+            <a href="#close" title="Close" class="close">X</a>
+            <h2>Dodavanje modela</h2>
+
+            <hr />
+            <div class="row" style="width:900px">
+                <div class="col-md-4">
+                    <form ajax-poziv="da" action="/MenadžerAutomobila/SnimiModel" ajax-partial="/MenadžerAutomobila/IndexModel" tip-modala="openModal3">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <input id="modelInput" class="form-control inputi" required oninvalid="this.setCustomValidity('Unesite naziv modela!')"
+                                   oninput="this.setCustomValidity('')" placeholder="Unesite naziv modela" name="model1" />
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Marka</label>
+                            <select class="form-control inputi" id="markeSelect" name="id" style="height:35px;" required oninvalid="this.setCustomValidity('Odabir marke je obavezan!')"
+                                    oninput="this.setCustomValidity('')" asp-items='@new SelectList(string.Empty,"MarkaId","Nazvi")'></select>
+                            <span class="text-danger"></span>
+
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Sačuvaj" class="btn btn-primary" />
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div id="openModal4" class="modalDialog">
+        <div>
+            <a href="#close" title="Close" class="close">X</a>
+            <h4>Dodavanje tipa</h4>
+            <hr />
+            <div class="row" style="width:900px">
+                <div class="col-md-4">
+                    <form ajax-poziv="da" action="/MenadžerAutomobila/SnimiTip" ajax-partial="/MenadžerAutomobila/IndexTip" tip-modala="openModal4">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+
+                            <input class="form-control inputi" required oninvalid="this.setCustomValidity('Unesite naziv tipa!')"
+                                   oninput="this.setCustomValidity('')" placeholder="Unesite naziv tipa" name="naziv" />
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Snimi" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div id="openModal5" class="modalDialog">
+        <div>
+            <a href="#close" title="Close" class="close">X</a>
+            <h2>Dodavanje goriva</h2>
+
+            <hr />
+            <div class="row" style="width:900px">
+                <div class="col-md-4">
+                    <form ajax-poziv="da" action="/MenadžerAutomobila/SnimiGorivo" ajax-partial="/MenadžerAutomobila/IndexGorivo" tip-modala="openModal5">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+
+                            <input class="form-control inputi" style="height:35px;" required oninvalid="this.setCustomValidity('Unesite naziv goriva!')"
+                                   oninput="this.setCustomValidity('')" placeholder="Unesite naziv goriva" name="naziv" />
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Sačuvaj" class="btn btn-primary" />
+
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div id="openModal6" class="modalDialog">
+        <div>
+            <a href="#close" title="Close" class="close">X</a>
+            <h4>Dodaj novu transmisiju</h4>
+            <hr />
+            <div class="row" style="width:900px">
+                <div class="col-md-4">
+                    <form ajax-poziv="da" action="/MenadžerAutomobila/SnimiTransmisija" ajax-partial="/MenadžerAutomobila/IndexTransmisija" tip-modala="openModal6">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+
+                            <input class="form-control inputi" style="height:35px;" required oninvalid="this.setCustomValidity('Unesite naziv transmisije!')"
+                                   oninput="this.setCustomValidity('')" placeholder="Unesite naziv transmisije" name="naziv" />
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Sačuvaj" class="btn btn-primary" />
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div id="openModal7" class="modalDialog">
+        <div>
+            <a href="#close" title="Close" class="close">X</a>
+            <h2>Dodavanje</h2>
+
+            <hr />
+            <div class="row" style="width:900px">
+                <div class="col-md-4">
+                    <form ajax-poziv="da" action="/MenadžerAutomobila/SnimiVrata" ajax-partial="/MenadžerAutomobila/IndexVrata" tip-modala="openModal7">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+
+                            <input class="form-control inputi" style="height:35px;" required oninvalid="this.setCustomValidity('Unesite broj vrata!')"
+                                   oninput="this.setCustomValidity('')" placeholder="Unesite broj vrata" name="naziv" />
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Sačuvaj" class="btn btn-primary" />
+
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div id="openModal8" class="modalDialog">
+        <div>
+            <a href="#close" title="Close" class="close">X</a>
+            <h2>Dodaj opremu</h2>
+
+            <hr />
+            <div class="row" style="width:900px">
+                <div class="col-md-4">
+                    <form ajax-poziv="da" action="/MenadžerAutomobila/SnimiOprema" ajax-partial="/MenadžerAutomobila/IndexOprema" tip-modala="openModal8">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+
+                            <input class="form-control inputi" style="height:35px;" required oninvalid="this.setCustomValidity('Unesite naziv opreme!')"
+                                   oninput="this.setCustomValidity('')" placeholder="Unesite naziv opreme" name="naziv" />
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+
+                            <input class="form-control inputi" style="height:35px;" required oninvalid="this.setCustomValidity('Unesite opis opreme!')"
+                                   oninput="this.setCustomValidity('')" placeholder="Unesite opis opreme" name="opis" />
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                                <input type="submit" value="Sačuvaj" class="btn btn-primary" />
+
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    $("form#fauta").submit(function (e) {
+
+
+        toastr.options.positionClass = 'toast-top-left';
+        toastr.options.timeOut = 40000;
+        toastr.options.fadeOut = 350;
+        toastr.options.fadeIn = 350;
+
+        toastr.info("Podatci spremljeni.");
+
+
+
+
+
+    });
+   
+        $(document).ready(function () {
+
+            $("#error1").hide();
+            $("#error2").hide();
+            $("#error3").hide();
+            $("#error4").hide();
+            $("#autic").hide();
+
+    });
+
+    $("#slika").change(function () {
+        if ($("#datum2").val() != '' && $("#kilo").val() != '' && $("#kubik").val() != '' && $("#cijena").val() != '' &&
+            $("#opremu").val() != '' && $("#tip").val() != '' && $("#brVrt").val() != '' && $("#trans").val() != '' &&
+            $("#poslovnica").val() != '' && $("#slika").val() != '' && $("#snaga").val() != '' && $("#model").val != '' && $("#gorivo").val != '') {
+            $("#autic").show();
+            $("#btnPoruka").hide();
+
+        }
+        else {
+            $("#autic").hide();
+
+        }
+    });
+
+
+        $("#kubik").change(function () {
+            
+            var now = $("#kubik").val().replace(/ +?/g, '');
+            if (!($.isNumeric(now))) {
+                $("#error1").show();
+                $("#kubik").addClass('error');
+                $("#kilo").prop('readonly', true);
+                $("#datum2").prop('readonly', true);
+                $("#cijena").prop('readonly', true);
+                $("#opremu").prop('disabled', true);
+                $("#tip").prop('disabled', true);
+                $("#trans").prop('disabled', true);
+                $("#model").prop('disabled', true);
+                $("#gorivo").prop('disabled', true);
+                $("#poslovnica").prop('disabled', true);
+                $("#slika").prop('readonly', true);
+                $("#snaga").prop('readonly', true);
+                $("#brVrt").prop('disabled', true);
+
+                $("#autic").hide();
+
+
+
+
+
+               
+
+            }
+            else {
+                $("#error1").hide();
+                $("#kubik").removeClass('error');
+                $("#kilo").prop('readonly', false);
+                $("#datum2").prop('readonly', false);
+                $("#cijena").prop('readonly', false);
+                $("#opremu").prop('disabled', false);
+                $("#tip").prop('disabled', false);
+                $("#trans").prop('disabled', false);
+                $("#model").prop('disabled', false);
+                $("#gorivo").prop('disabled',false);
+                $("#poslovnica").prop('disabled', false);
+                $("#slika").prop('readonly', false);
+                $("#snaga").prop('readonly', false);
+                $("#brVrt").prop('disabled', false);
+                if ($("#datum2").val() != '' && $("#kilo").val() != '' && $("#kubik").val() != '' && $("#cijena").val() != '' &&
+                    $("#opremu").val() != '' && $("#tip").val() != '' && $("#brVrt").val() != '' && $("#trans").val() != '' &&
+                    $("#poslovnica").val() != '' && $("#slika").val() != '' && $("#snaga").val() != '' && $("#model").val != '' && $("#gorivo").val != '') {
+                    $("#autic").show();
+                    $("#btnPoruka").hide();
+
+                }
+               
+            }
+       
+
+        });
+        $("#snaga").change(function () {
+           
+            var now = $("#snaga").val().replace(/ +?/g, '');
+
+            if (!($.isNumeric(now))) {
+                $("#error2").show();
+                $("#snaga").addClass('error');
+                $("#kilo").prop('readonly', true);
+                $("#datum2").prop('readonly', true);
+                $("#cijena").prop('readonly', true);
+                $("#opremu").prop('disabled', true);
+                $("#tip").prop('disabled', true);
+                $("#trans").prop('disabled', true);
+                $("#model").prop('disabled', true);
+                $("#gorivo").prop('disabled', true);
+                $("#poslovnica").prop('disabled', true);
+                $("#slika").prop('readonly', true);
+                $("#kubik").prop('readonly', true);
+                $("#brVrt").prop('disabled', true);
+                $("#autic").hide();
+
+
+
+
+
+            }
+            else {
+                $("#error2").hide();
+                $("#snaga").removeClass('error');
+                $("#kilo").prop('readonly', false);
+                $("#datum2").prop('readonly', false);
+                $("#cijena").prop('readonly', false);
+                $("#opremu").prop('disabled', false);
+                $("#tip").prop('disabled', false);
+                $("#trans").prop('disabled', false);
+                $("#model").prop('disabled', false);
+                $("#gorivo").prop('disabled', false);
+                $("#poslovnica").prop('disabled', false);
+                $("#slika").prop('readonly', false);
+                $("#kubik").prop('readonly', false);
+               
+                $("#brVrt").prop('disabled', false);
+                if ($("#datum2").val() != '' && $("#kilo").val() != '' && $("#kubik").val() != '' && $("#cijena").val() != '' &&
+                    $("#opremu").val() != '' && $("#tip").val() != '' && $("#brVrt").val() != '' && $("#trans").val() != '' &&
+                    $("#poslovnica").val() != '' && $("#slika").val() != '' && $("#snaga").val() != '' && $("#model").val != '' && $("#gorivo").val != '') {
+                    $("#autic").show();
+                    $("#btnPoruka").hide();
+
+                }
+             
+             
+            }
+           
+
+        });
+        $("#cijena").change(function () {
+
+            
+            var now = $("#cijena").val().replace(/ +?/g, '');
+
+            if (!($.isNumeric(now))) {
+                $("#error3").show();
+                $("#cijena").addClass('error');
+                $("#kilo").prop('readonly', true);
+
+                $("#datum2").prop('readonly', true);
+                $("#kubik").prop('readonly', true);
+                $("#opremu").prop('disabled', true);
+                $("#tip").prop('disabled', true);
+                $("#trans").prop('disabled', true);
+                $("#model").prop('disabled', true);
+                $("#gorivo").prop('disabled', true);
+                $("#poslovnica").prop('disabled', true);
+                $("#slika").prop('readonly', true);
+                $("#snaga").prop('readonly', true);
+                $("#brVrt").prop('disabled', true);
+                $("#autic").hide();
+
+            }
+            else {
+                $("#error3").hide();
+                $("#cijena").removeClass('error');
+                $("#kilo").prop('readonly', false);
+                $("#datum2").prop('readonly', false);
+                $("#kubik").prop('readonly', false);
+                $("#opremu").prop('disabled', false);
+                $("#tip").prop('disabled', false);
+                $("#trans").prop('disabled', false);
+                $("#model").prop('disabled', false);
+                $("#gorivo").prop('disabled', false);
+                $("#poslovnica").prop('disabled', false);
+                $("#slika").prop('readonly', false);
+                $("#snaga").prop('readonly', false);
+                $("#brVrt").prop('disabled', false);
+                if ($("#datum2").val() != '' && $("#kilo").val() != '' && $("#kubik").val() != '' && $("#cijena").val() != '' &&
+                    $("#opremu").val() != '' && $("#tip").val() != '' && $("#brVrt").val() != '' && $("#trans").val() != '' &&
+                    $("#poslovnica").val() != '' && $("#slika").val() != '' && $("#snaga").val() != '' && $("#model").val != '' && $("#gorivo").val != '') {
+                    $("#autic").show();
+                    $("#btnPoruka").hide();
+
+                }
+              
+            }
+
+        });
+        $("#kilo").change(function () {
+
+         
+            var now = $("#kilo").val().replace(/ +?/g, '');
+
+            if (!($.isNumeric(now))) {
+                $("#error4").show();
+                $("#kilo").addClass('error');
+                $("#kubik").prop('readonly', true);
+
+                $("#datum2").prop('readonly', true);
+                $("#cijena").prop('readonly', true);
+                $("#opremu").prop('disabled', true);
+                $("#tip").prop('disabled', true);
+                $("#trans").prop('disabled', true);
+                $("#model").prop('disabled', true);
+                $("#gorivo").prop('disabled', true);
+                $("#poslovnica").prop('disabled', true);
+                $("#slika").prop('readonly', true);
+                $("#snaga").prop('readonly', true);
+                $("#brVrt").prop('disabled', true);
+                $("#autic").hide();
+                $("#btnPoruka").show();
+            }
+            else {
+                $("#error4").hide();
+                $("#kilo").removeClass('error');
+                $("#kubik").prop('readonly', false);
+                $("#datum2").prop('readonly', false);
+                $("#cijena").prop('readonly', false);
+                $("#opremu").prop('disabled', false);
+                $("#tip").prop('disabled', false);
+                $("#trans").prop('disabled', false);
+                $("#model").prop('disabled', false);
+                $("#gorivo").prop('disabled', false);
+                $("#poslovnica").prop('disabled', false);
+                $("#slika").prop('readonly', false);
+                $("#snaga").prop('readonly', false);
+                $("#brVrt").prop('disabled', false);
+                if ($("#datum2").val() != '' && $("#kilo").val() != '' && $("#kubik").val() != '' && $("#cijena").val() != '' &&
+                    $("#opremu").val() != '' && $("#tip").val() != '' && $("#brVrt").val() != '' && $("#trans").val() != '' &&
+                    $("#poslovnica").val() != '' && $("#slika").val() != '' && $("#snaga").val() != '' && $("#model").val != '' && $("#gorivo").val != '') {
+                    $("#autic").show();
+                    $("#btnPoruka").hide();
+
+                }
+               
+            }
+
+        });
+          
+
+    
+
+    $(function () {
+
+
+
+        $("#modelInput").change(function () {
+
+
+            $.getJSON("/MenadžerAutomobila/VratiMarke", function (rez) {
+                var items = '';
+                $("#markeSelect").empty();
+                $.each(rez, function (i, red) {
+                    items += "<option value='" + red.value + "'>" + red.text + "</option>"
+
+                });
+                $("#markeSelect").html(items);
+            });
+        });
+
+      
+
+
+
+        $("#cijena").change(function () {
+
+            $.getJSON("/MenadžerAutomobila/VratiMarke2", function (rez) {
+                var items = '';
+                $("#model").empty();
+                $.each(rez, function (i, red) {
+                    items += "<option value='" + red.value + "'>" + red.text + "</option>"
+
+                });
+                $("#model").html(items);
+            });
+      
+
+            $.getJSON("/MenadžerAutomobila/VratiOpremu", function (rez) {
+            var items = '';
+            $("#opremu").empty();
+            $.each(rez, function (i, red) {
+                items += "<option value='" + red.value + "'>" + red.text + "</option>"
+
+            });
+            $("#opremu").html(items);
+        });
+
+        });
+    });
+
+
+
+
+
+
+    $(".btnOdg").click(function (event) {
+
+        var btn = $(this);
+        var id = btn.attr("atribut");
+
+        $.get("/Upiti/Details?id=" + id,
+            function (rez, status) {
+                $("#samko").html(rez);
+            });
+
+    });
+
+
+
+
+
+
+
+ 
+    $("form[ajax-poziv='da']").submit(function (e) {
+        e.preventDefault();
+        var forma = $(this);
+        var url = forma.attr("ajax-partial");
+        var btn = document.getElementById("cloSe");
+
+        $.ajax({
+            async: true,
+            type: "POST",
+            cache: false,
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function (success) {
+                if (success.success == true) {
+                    btn.click();
+                    toastr.options.positionClass = 'toast-top-left';
+                    toastr.options.timeOut = 3000;
+                    toastr.success("Podatci spremljeni.");
+
+                    $.get(url,
+                        function (ev) {
+                            $("#samko").html(ev);
+                            forma.trigger('reset');
+
+                        });
+                }
+                else {
+                    btn.click();
+                    toastr.options.positionClass = 'toast-top-left';
+                    toastr.options.timeOut = 3000;
+                    toastr.info("Podatak postoji već!");
+                    $.get(url,
+                        function (ev) {
+                            $("#samko").html(ev);
+                            forma.trigger('reset');
+
+                        });
+                }
+            }
+
+        });
+    });
+
+
+
+    $("a[ajax-poziv='da']").click(function (e) {
+
+        atag = $(this);
+        var url = atag.attr("url");
+
+        $.get(url,
+            function (rez, status) {
+                $("#samko").html(rez);
+            });
+
+
+    });
+
+</script>
+
+
+
+
+
+
+
+

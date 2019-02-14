@@ -1,0 +1,82 @@
+﻿@model AutoServis.Models.Popravke
+
+<h1>Detalji popravke</h1>
+
+<div class="row" style="background-color:lightgray;">
+    <div class="col-md-2" style="padding:30px;box-sizing:border-box;">
+        <h3>Uposlenik:</h3>
+        <br />
+        <h1 style="display:inline;">@Model.Uposlenik.Osoba.Ime @Model.Uposlenik.Osoba.Prezime</h1>
+
+    </div>
+    <div class="col-md-2" style="padding:30px;box-sizing:border-box;">
+        <h3> Datum popravke:</h3>
+        <br />
+        <h2 style="display:inline;">@Model.DatumPopravke </h2>
+
+
+    </div>
+    <div class="col-md-2" style="padding:30px;box-sizing:border-box;">
+        <h3>Poslovnica:</h3>
+        <br />
+        <h2 style="display:inline;">@Model.Poslovnica.Naziv </h2>
+
+
+    </div>
+</div>
+<div class="row" style="background-color:lightgray;">
+
+    <div class="col-md-5" style="padding:30px;box-sizing:border-box;">
+        <table>
+            <tr style="width:400px;height:100px;">
+
+                <td style="width:300px;font-size:1.5em">
+                   Opis kvara
+                </td>
+                
+                <td style="width:100px;font-size:1.5em">
+                  @Model.OpisKvara
+
+                </td>
+            </tr>
+            <tr>
+                <td style="width:300px;font-size:1.5em">
+                    Cijena popravke
+                </td>
+               
+                <td style="width:100px;font-size:1.5em">
+                   @Model.CijenaPopravke
+
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+</div>
+<div class="row" style="background-color:lightgray;">
+    
+    <div class="col-md-5" style="padding:30px;box-sizing:border-box;">
+        <h2>Stavke utrošene u popravci</h2>
+        @foreach (var x in ViewBag.listaStavki)
+        {
+            <table class="table ">
+                <tr>
+                    <td style="font-size:1.5em">
+                        @x
+                    </td>
+                </tr>
+            </table>
+        }
+
+    </div>
+
+</div>
+
+
+
+
+<div>
+
+    <a asp-action="Index" class="btn btn-default btn-lg">Nazad na listu</a>
+</div>

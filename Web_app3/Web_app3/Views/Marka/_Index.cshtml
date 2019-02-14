@@ -1,0 +1,36 @@
+﻿@model IEnumerable<AutoServis.Models.Marka>
+
+<div style="margin-left:150px">
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-sm">
+        <span class="glyphicon glyphicon-arrow-left"></span>
+    </a>
+    <a asp-action="Create" class="btn btn-primary btn-sm">
+        <span class="glyphicon glyphicon-plus"></span>Dodaj
+    </a>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th>
+                        Naziv
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nazvi)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.MarkaId" class="btn btn-warning">Izmjeni</a> |
+                            <a asp-action="Delete" asp-route-id="@item.MarkaId" class="btn btn-danger">Obrisi</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,108 @@
+﻿@model AutoServis.ViewModels.UposleniciVM
+
+<div style="margin-left:2%">
+    <div class="form-inline">
+       
+        <a data-ajax="true" data-ajax-update="#content" asp-action="Create"   asp-controller="Uposlenik" asp-area="" class="btn btn-primary btn-sm">
+            <span class="glyphicon glyphicon-plus"></span>Dodaj
+        </a>
+        <form asp-controller="Uposlenik" asp-action="Index" asp-area="" style="margin-left:20px">
+            Pretraga : <input style="height:40px" type="text" name="pretraga" />
+            <select style="height:40px" asp-for="vrstaID" asp-items="ViewBag.vrstaID">
+                <option value="">Vrsta uposlenika</option>
+            </select>
+            <input type="submit" value="Pretraži" class="btn btn-primary btn-sm" />
+        </form>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover table-condenseds"style="box-shadow: 0 4px 8px rgba(0,0,0,.08)">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayName("Ime")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Prezime")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Korisnicko Ime")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Lozinka")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Telefon")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Poslovnica")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Grad")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Vrsta zaposlenja")
+                    </th>
+                    <th>@Html.DisplayName("Aktivnost")</th>
+                    <th>@Html.DisplayName("Akcija")</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.podaci)
+                {
+                    <tr>
+                        <td>
+                            @item.ime
+                        </td>
+                        <td>
+                            @item.prezime
+                        </td>
+                        <td>
+                            @item.korisnicko
+                        </td>
+                        <td>
+                            @item.lozinka
+                        </td>
+                        <td>
+                            @item.telefon
+                        </td>
+                        <td>
+                            <a data-ajax="true" data-ajax-update="#content" asp-controller="Poslovnica" asp-action="Details" asp-area="" asp-route-naziv="@item.poslovnica">@item.poslovnica</a>
+                        </td>
+                        <td>
+                            @item.grad
+                        </td>
+                        <td>
+                            @item.vrsta
+                        </td>
+                        <td>
+                            @if (item.neaktivan == true)
+                            {
+                                @Html.DisplayName("Ne radi")
+
+                            }
+
+                            else
+                            {
+                                @Html.DisplayName("Radi");
+                            }
+
+
+                        </td>
+                        <td>
+
+                            <a data-ajax="true" data-ajax-update="#content" asp-action="Details"  asp-controller="Uposlenik" asp-area="" asp-route-id="@item.itemID" class="btn btn-primary btn-xs">Detalji</a>
+                            @if (item.neaktivan == false)
+                            {
+                                <a asp-action="Delete" asp-route-id="@item.itemID" class="btn btn-primary btn-xs">Otpusti</a>}
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div id="content">
+
+    </div>
+</div>

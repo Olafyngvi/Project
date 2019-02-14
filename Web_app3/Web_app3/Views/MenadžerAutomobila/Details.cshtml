@@ -1,0 +1,226 @@
+﻿@model AutoServis.ViewModels.DetaljiVozila
+
+<div style="display:inline-block;float:left">
+    <div>
+        <h2>Detalji</h2>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Broj pregleda:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.vozilo.brojPregleda)
+            </dd>
+            <dt>
+                Datum proizvodnje:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.vozilo.DatumProizvodnje)
+            </dd>
+            <dt>
+                Kilometraža:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.vozilo.Kilometraza) km
+
+            </dd>
+            <dt>
+                Kubikaža:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.vozilo.Kubikaza) cca
+            </dd>
+            <dt>
+                Snaga motora:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.vozilo.SnagaMotora) KS/kW
+            </dd>
+            <dt>
+                Cijena:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.vozilo.Cijena) KM
+            </dd>
+            <dt>
+                Prodato:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.vozilo.isDeleted)
+            </dd>
+            <dt>
+                Broj vrata:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.vozilo.BrojVrata.Naziv)
+            </dd>
+            <dt>
+                Gorivo:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.vozilo.Gorivo.Naziv)
+            </dd>
+            <dt>
+                Model:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.vozilo.Model.Naziv)
+            </dd>
+            <dt>
+                Marka:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.vozilo.Model.marka.Nazvi)
+            </dd>
+            <dt>
+                Oprema:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.vozilo.Oprema.Naziv)
+            </dd>
+            <dt>
+                Tip vozila:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.vozilo.TipVozila.Naziv)
+            </dd>
+            <dt>
+                Transmisija:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.vozilo.Transmisija.Naziv)
+            </dd>
+            <dt>
+                Šifra vozila:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.vozilo.SifraAutomobila)
+            </dd>
+            <dt>
+                Datum uvoza vozila:
+            </dt>
+            <dd>
+                @if (Model.VozilaPoslovnice.DatumUvoza.Year == 0001)
+                {
+                    @Html.DisplayName("Vozilo nije uvezeno")
+                }
+                else
+                {
+                    @Html.DisplayFor(model => model.VozilaPoslovnice.DatumUvoza)
+
+                }
+            </dd>
+            <dt>
+                Poslovnica:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.VozilaPoslovnice.Poslovnica.Naziv)
+            </dd>
+        </dl>
+
+    </div>
+    <div>
+        <a id="BtnEdit" style="color:white" atribut="@Model.vozilo.VoziloProdajaID" class="btn btn-primary btn-xs">Uredi podatke</a> |
+        <a id="BtnNazad"  class="btn btn-default btn-xs">Nazad</a>
+    </div>
+</div>
+<div style="display:inline-block;margin-left:50px;height:300px;width:600px;">
+    <h2>Galerija slika</h2>
+    <hr />
+    @for (int i = 0; i < Model.SlikeGalerije.Count; i++)
+    {
+    <div class="row" style="display:inline-block;">
+        <div class="column" style="width:150px; margin-left:15px; margin-right:8px;margin-top:10px">
+            @{
+
+        var base64 = Convert.ToBase64String(Model.SlikeGalerije[i].Slika);
+        var slikaurl = string.Format("data:image/gif;base64,{0}", base64);
+            }
+            <img src='@slikaurl' style="width:100%;" alt="" class="hover-shadow">
+            <a ajax="da" vozilo="@Model.vozilo.VoziloProdajaID" atribut="@Model.SlikeGalerije[i].Id" style="width:100%;color:white;" class="btn btn-danger btn-xs kloc">Obriši sliku</a>
+             
+        </div>
+
+    </div>
+    }
+    <hr />
+    <form asp-action="SnimiS" asp-controller="MenadžerAutomobila" asp-area="" enctype="multipart/form-data">
+        <div class="buttons">
+            <div class="upload-button">
+                <input name="id" value="@Model.vozilo.VoziloProdajaID" hidden />
+                <input id="files" name="slika" required  oninvalid="this.setCustomValidity('Niste odabrali sliku!')"
+                               oninput="this.setCustomValidity('')" type="file"  />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Dodaj sliku"  style="margin-top:5px;"  class="btn btn-primary btn-xs"/>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+<script>
+
+    $("a[ajax='da']").on('click', function (e) {
+        var btn = $(this);
+        var ide = btn.attr('atribut');
+        var vozilo = btn.attr('vozilo');
+  
+        $.get("/MenadžerAutomobila/DeleteS?id=" + ide,
+          
+                    function (rez, status) {
+                        
+
+                        $("#samko").html(rez);
+
+                    });
+        toastr.options.positionClass = 'toast-top-left';
+        toastr.options.timeOut = 4000;
+        toastr.warning("Slika obrisana!");
+     
+    });
+   
+    $('form').submit(function (e) {
+
+       
+        toastr.options.positionClass = 'toast-top-left';
+        toastr.options.timeOut = 40000;
+        toastr.options.fadeOut = 350;
+        toastr.options.fadeIn = 350;
+
+        toastr.success("Slika dodana!");
+
+
+
+    });
+  
+   
+
+
+    $("#BtnEdit").click(function (event) {
+
+        var btn = $(this);
+        var id = btn.attr("atribut");
+      
+
+        $.get("/MenadžerAutomobila/Edit?id=" + id,
+            function (rez, status) {
+
+                $("#samko").html(rez);
+            });
+
+    });
+
+    $("#BtnNazad").click(function (event) {
+      
+
+        $.get("/MenadžerAutomobila/Index",
+            function (rez, status) {
+
+                $("#samko").html(rez);
+            });
+
+    });
+
+</script>

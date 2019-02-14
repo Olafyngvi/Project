@@ -1,0 +1,105 @@
+﻿@model ReflectionIT.Mvc.Paging.PagingList<AutoServis.Models.Klijent>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *, ReflectionIT.Mvc.Paging
+@using AutoServis.Helper
+@{
+    Uposlenik username = Context.GetLogiraniKorisnik();
+}
+<center><h2>Klijenti</h2></center>
+<b style="float:right">Ukupno klijenata: @ViewBag.Ukupno</b>
+<div style="margin-left:2%">
+
+    <div class="form-inline">
+        @if (username != null && username.VrstaUposlenikaId == 3)
+        {
+            <a asp-area="" asp-controller="Order" asp-action="Index" class="btn btn-primary btn-sm">
+                <span class="glyphicon glyphicon-arrow-left"></span>
+            </a>
+        }
+        else
+        {
+            <a asp-controller="Administrator" asp-action="Index" class="btn btn-primary btn-sm">
+                <span class="glyphicon glyphicon-arrow-left"></span>
+            </a>
+        }
+
+        <form method="get" class="form-inline" style="margin-left:20px">
+            <input name="search" class="form-control" placeholder="Pretraga"
+                   value="@Model.RouteValue["Filter"]" style="height:40px" />
+            <button type="submit" class="btn btn-primary btn-sm">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Pretrazi
+            </button>
+        </form>
+    </div>
+    <table class="table table-bordered table-condensed table-striped table-hover table-responsive-sm" style="box-shadow: 0 4px 8px rgba(0,0,0,.08);">
+        <thead>
+            <tr>
+                <th>
+                    @Html.SortableHeaderFor(x => x.Osoba.Ime, this.Model)
+                </th>
+                <th>
+                    @Html.SortableHeaderFor(x => x.Osoba.Prezime, this.Model)
+                </th>
+                <th>
+                    Adresa
+                </th>
+                <th>
+                    Telefon
+                </th>
+                <th>
+                    @Html.SortableHeaderFor(x => x.Osoba.Grad, this.Model)
+                </th>
+                <th>
+                    @Html.SortableHeaderFor(x => x.DatumRegistracije, this.Model)
+                </th>
+                <th>
+                    @Html.SortableHeaderFor(s => s.BrojNarudzbi, this.Model)
+                </th>
+                <th>
+                    Akcija
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Osoba.Ime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Osoba.Prezime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Osoba.Adresa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Osoba.Telefon)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Osoba.Grad.Naziv)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DatumRegistracije)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BrojNarudzbi)
+                    </td>
+
+                    <td>
+                        <a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#naru" asp-controller="Order" asp-action="NarudzbeByKlijent" asp-route-id="@item.Id" class="btn btn-primary btn-xs">Narudzbe</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <nav>
+        @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model })
+    </nav>
+</div>
+<hr />
+<div id="naru">
+
+</div>
+

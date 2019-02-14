@@ -1,0 +1,13 @@
+﻿@model ShoppingCartVM
+
+@if (Model.ShoppingCart.ShoppingCartItems.Count > 0)
+{
+    
+        <a asp-area="" asp-controller="ShoppingCart" asp-action="Index" >
+            <span class="glyphicon glyphicon-shopping-cart fa-2x" style="padding-top:12px; padding-right:50px;float:right"></span>
+            <span id="cart-status" style="float:right;font-size:large">
+                @Model.ShoppingCart.ShoppingCartItems.Count
+            </span>
+        </a>
+    
+}

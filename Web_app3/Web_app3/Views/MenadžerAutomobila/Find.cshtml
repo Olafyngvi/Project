@@ -1,0 +1,113 @@
+﻿@model AutoServis.ViewModels.VoziloProdajaVM
+
+<h2>Rezultati pretrage</h2>
+<div class="table-responsive">
+
+    <table class="table table-striped table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+                <th>
+                    Model
+                </th>
+                <th>
+                    Marka
+
+                </th>
+                <th>
+                    Tip vozila
+
+                </th>
+                <th>
+                    Cijena
+
+                </th>
+                <th>Šifra vozila</th>
+                <th>Akcije</th>
+            </tr>
+        </thead>
+        @foreach (var item in Model.vozilo)
+        {
+            <tbody>
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Model.Naziv)
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Model.marka.Nazvi)
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipVozila.Naziv)
+
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cijena)
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SifraAutomobila)
+
+                    </td>
+                    <td>
+
+                        <a atribut="@item.VoziloProdajaID" style="color:white" class="btn btn-primary btn-xs BtnDetalji">Detalji vozila</a> |
+                      
+                        @if (item.isDeleted == false)
+                        {
+
+                            <a atribut="@item.VoziloProdajaID" style="color:white" class="btn btn-primary btn-xs BtnProdaj">Arhiviraj vozilo</a>
+
+                        }
+
+                    </td>
+                </tr>
+
+            </tbody>
+        }
+    </table>
+    <a id="BtnNazad" style="margin-left:10px" class="btn btn-default">Nazad na listu</a>
+</div>
+
+<script>
+
+
+    $("#BtnNazad").click(function (event) {
+
+
+
+
+        $.get("/MenadžerAutomobila/Index",
+            function (rez, status) {
+
+                $("#samko").html(rez);
+            });
+
+    });
+
+     $(".BtnDetalji").click(function (event) {
+
+        var btn = $(this);
+        var id = btn.attr("atribut");
+
+         $.get("/MenadžerAutomobila/Details?id=" + id,
+            function (rez, status) {
+            $("#samko").html(rez);
+        });
+
+    });
+    $(".BtnProdaj").click(function (event) {
+
+        var btn = $(this);
+        var id = btn.attr("atribut");
+
+        $.get("/MenadžerAutomobila/AkcijaPregled?id=" + id,
+            function (rez, status) {
+                $("#samko").html(rez);
+            });
+
+    });
+</script>
+

@@ -1,0 +1,113 @@
+﻿@model IEnumerable<AutoServis.Models.Model>
+
+<h2>Modeli vozila</h2>
+
+
+<form id="search" action="/MenadžerAutomobila/IndexModel">
+    Naziv modela:<input type="text" name="mod"/>
+    <select name="markaID" asp-items="ViewBag.MarkaID">
+    <option value="">Marke vozila
+        </option></select>
+    <input type="submit" value="Pretraži" class="btn btn-primary"/>
+</form>
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Naziv)
+                </th>
+                <th>
+                    Marka
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Naziv)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.marka.Nazvi)
+                </td>
+                <td>
+                    <a atribut="@item.ModelId" style="color:white" class="btn btn-primary btn-xs btnIzmijeni">Izmjeni</a>
+                    <a atribut="@item.ModelId" url="/MenadžerAutomobila/DeleteModel?id=" style="color:white" class="btn btn-primary btn-xs Obrisi">Obriši</a>
+
+
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(".btnIzmijeni").click(function (event) {
+
+        var btn = $(this);
+        var id = btn.attr("atribut");
+
+        $.get("/MenadžerAutomobila/EditModel?id=" + id,
+            function (rez, status) {
+                $("#samko").html(rez);
+
+            }
+        );
+    });
+    $("form#search").on('submit', function (e) {
+        e.preventDefault();
+        $.ajax({
+            async:true,
+            type: "POST",
+            cache: false,
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function (data) {
+                $("#samko").html(data);
+
+            }
+        });
+
+    });
+
+    $(".Obrisi").click(function (event) {
+
+        var btn = $(this);
+        var id = btn.attr("atribut");
+        $.ajax({
+            type: 'GET',
+            url: $(this).attr('url') + id,
+            contentType: 'json',
+            success: function (data) {
+                bootbox.alert("<b>Uspješno ste obrisali zapis!<b>");
+
+                $.get("/MenadžerAutomobila/IndexModel",
+                    function (rez, status) {
+
+                        $("#samko").html(rez);
+
+                    }
+                );
+
+            },
+            error: function (bezze) {
+
+                $.get("/MenadžerAutomobila/ERROR",
+                    function (rez, status) {
+
+                        $("#samko").html(rez);
+
+                    }
+                );
+            }
+        });
+    });
+
+
+
+  
+</script>

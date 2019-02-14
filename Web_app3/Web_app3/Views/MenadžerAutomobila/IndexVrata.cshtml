@@ -1,0 +1,81 @@
+﻿@model IEnumerable<AutoServis.Models.BrojVrata>
+
+<h2>Broj vrata</h2>
+
+
+</p>
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+                <th>
+                    Broj vrata
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Naziv)
+                    </td>
+                    <td>
+                        <a atribut="@item.BrojVrataId" style="color:white" class="btn btn-primary btn-xs EditVrata">Izmjeni</a>
+                        <a atribut="@item.BrojVrataId" url="/MenadžerAutomobila/DeleteVrata?id=" style="color:white" class="btn btn-primary btn-xs Obrisi">Obriši</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    
+    $(".EditVrata").click(function (event) {
+
+        var btn = $(this);
+        var id = btn.attr("atribut");
+
+        $.get("/MenadžerAutomobila/EditVrata?id=" + id,
+            function (rez, status) {
+            $("#samko").html(rez);
+        });
+
+    });
+
+    $(".Obrisi").click(function (event) {
+
+        var btn = $(this);
+        var id = btn.attr("atribut");
+        $.ajax({
+            type: 'GET',
+            url: $(this).attr('url') + id,
+            contentType: 'json',
+            success: function (data) {
+                bootbox.alert("<b>Uspješno ste obrisali zapis!<b>");
+
+                $.get("/MenadžerAutomobila/IndexVrata",
+                    function (rez, status) {
+
+                        $("#samko").html(rez);
+
+                    }
+                );
+
+            },
+            error: function (bezze) {
+
+                $.get("/MenadžerAutomobila/ERROR",
+                    function (rez, status) {
+
+                        $("#samko").html(rez);
+
+                    }
+                );
+            }
+        });
+    });
+</script>

@@ -1,0 +1,84 @@
+﻿@model AutoServis.ViewModels.UposleniciVM
+
+<div style="margin-left:2%">
+    <h2>Pretraga</h2>
+    <a asp-controller="Uposlenik" asp-action="Index" asp-area="" value="Nazad" class="btn btn-primary btn-sm">
+        <span class="glyphicon glyphicon-arrow-left"></span>
+    </a>
+
+    <table class="table table-active">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayName("Ime")
+                </th>
+                <th>
+                    @Html.DisplayName("Prezime")
+                </th>
+                <th>
+                    @Html.DisplayName("Korisnicko Ime")
+                </th>
+                <th>
+                    @Html.DisplayName("Lozinka")
+                </th>
+                <th>
+                    @Html.DisplayName("Telefon")
+                </th>
+                <th>
+                    @Html.DisplayName("Poslovnica")
+                </th>
+                <th>
+                    @Html.DisplayName("Grad")
+                </th>
+                <th>
+                    @Html.DisplayName("Vrsta uposlenika")
+                </th>
+                <th>@Html.DisplayName("Akcija")</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.uposlenici)
+            {
+                <tr>
+                    <td>
+                        @item.Osoba.Ime
+                    </td>
+                    <td>
+                        @item.Osoba.Prezime
+                    </td>
+                    <td>
+                        @item.Osoba.KorisnickoIme
+                    </td>
+                    <td>
+                        @item.Osoba.Lozinka
+                    </td>
+                    <td>
+                        @item.Osoba.Telefon
+                    </td>
+                    <td>
+                        @item.Poslovnica.Naziv
+                    </td>
+                    <td>
+                        @item.Osoba.Grad.Naziv
+                    </td>
+                    <td>
+                        @item.VrstaUposlenika.Naziv
+                    </td>
+                    <td>
+
+                        <a data-ajax="true" data-ajax-update="#content" asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-xs">Detalji</a> |
+                        @if (item.Neaktivan == false)
+                        {
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-primary btn-xs">Otpusti</a>
+
+
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id="content">
+
+    </div>
+</div>

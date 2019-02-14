@@ -1,0 +1,63 @@
+﻿@model AutoServis.Models.Transmisija
+
+<h2>Uređivanje</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form action="/MenadžerAutomobila/UpdateTransmisija">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" name="TransmisijaId" asp-for="TransmisijaId" />
+            <div class="form-group">
+                <label asp-for="Naziv"  class="control-label"></label>
+                <input asp-for="Naziv"  name="Naziv"class="form-control" />
+                <span asp-validation-for="Naziv" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Sačuvaj" class="btn btn-primary" />
+                <a id="IndexTransmisija" class="btn btn-default">Nazad na listu</a>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+</div>
+
+<script>
+    $("#IndexTransmisija").click(function (event) {
+        $.get("/MenadžerAutomobila/IndexTransmisija",
+            function (rez, status) {
+
+                $("#samko").html(rez);
+            });
+
+    });
+
+    $('form').on('submit', function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            cache: false,
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function (data) {
+                toastr.options.positionClass = 'toast-top-left';
+                toastr.options.timeOut = 3000;
+                toastr.options.fadeOut = 350;
+                toastr.options.fadeIn = 350;
+
+                $.get("/MenadžerAutomobila/IndexTransmisija",
+                    function (rez, status) {
+
+                        $("#samko").html(rez);
+                    });
+                toastr.info("Podatci uređeni!");
+
+            }
+        });
+
+    });
+</script>
+

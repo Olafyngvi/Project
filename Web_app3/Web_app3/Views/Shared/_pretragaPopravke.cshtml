@@ -1,0 +1,48 @@
+﻿@model AutoServis.ViewModels.NadjenaPopravkaVM
+
+
+@{
+    ViewData["Title"] = "_pretragaPopravke";
+}
+
+
+
+<table class="table" style="text-align:center;">
+    <thead class="thead-dark">
+        <tr >
+            <th style="padding:0px 10px;box-sizing:border-box;float:left;font-size:1.5em;background-color:inherit;color:black;border:none">
+                REZULTAT PRETRAGE
+            </th>
+        </tr>
+        <tr>
+           
+            <th style="font-size:1.5em;">
+               Broj popravke
+            </th>
+            <th style="font-size:1.5em;">
+                Datum popravke
+            </th>
+
+            <th style="font-size:1.5em;">Akcija</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td style="border-bottom:5px solid gray;font-size:1.8em;padding-top:20px;">
+               @Model.brojPopravke
+            </td>
+            <td style="border-bottom:5px solid gray;font-size:1.8em;padding-top:20px;">
+                @Model.datumPopravke
+
+            </td>
+
+            <td style="position:center;border-bottom:5px solid gray;margin-bottom:10px;">
+                <a asp-action="Details" class="btn btn-primary" asp-route-id="@Model.popravkaId">Detalji</a>
+
+            </td>
+        </tr>
+        
+    </tbody>
+</table>
+

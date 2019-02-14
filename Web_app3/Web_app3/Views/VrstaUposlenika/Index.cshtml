@@ -1,0 +1,39 @@
+﻿@model IEnumerable<AutoServis.Models.VrstaUposlenika>
+
+<center><h2>Vrste uposlenika</h2></center>
+
+<p>
+    <a data-ajax="true" data-ajax-update="#cont" asp-action="Create" asp-controller="VrstaUposlenika" asp-area="" class="btn btn-primary btn-sm">
+        <span class="glyphicon glyphicon-plus">Dodaj</span>
+    </a>
+</p>
+
+<table class=" table table-bordered table-condensed table-hover table-striped"style="box-shadow: 0 4px 8px rgba(0,0,0,.08)">
+    <thead>
+        <tr>
+            <th>
+               @Html.DisplayNameFor(model => model.Naziv)
+            </th>
+            <th>Akcija</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Naziv)
+            </td>
+            <td>
+                <a data-ajax="true" data-ajax-update="#cont" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-xs">Uredi</a> |
+              
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-primary btn-xs">Obriši</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<br />
+
+<div id="cont">
+
+</div>

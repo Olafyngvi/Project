@@ -1,0 +1,66 @@
+﻿@model IEnumerable<AutoServis.Models.Uposlenik>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DatumZaposljavanja)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JMBG)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DatumRodjenja)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Osoba)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Poslovnica)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VrstaUposlenika)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatumZaposljavanja)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JMBG)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatumRodjenja)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Osoba.Adresa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Poslovnica.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VrstaUposlenika.Id)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

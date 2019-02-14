@@ -1,0 +1,35 @@
+﻿@model AutoServis.Models.VozilaPoslovnice
+
+<h2>Uređivanje</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" asp-controller="VozilaPoslovnice" asp-area="">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="VozilaPoslovniceId" />
+            <div class="form-group">
+                <label asp-for="DatumUvoza" class="control-label">Datum uvoza</label>
+                <input asp-for="DatumUvoza" class="form-control" />
+                <span asp-validation-for="DatumUvoza" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PoslovnicaID" class="control-label">Poslovnica</label>
+                <select asp-for="PoslovnicaID" class="form-control" asp-items="ViewBag.PoslovnicaID" style="height:35px"></select>
+                <span asp-validation-for="PoslovnicaID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VoziloProdajaID" class="control-label">Šifra automobila</label>
+                <select asp-for="VoziloProdajaID" class="form-control" asp-items="ViewBag.VoziloProdajaID" style="height:35px"></select>
+                <span asp-validation-for="VoziloProdajaID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Sačuvaj" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Nazad na listu</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

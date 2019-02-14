@@ -1,0 +1,141 @@
+﻿@using AutoServis.Helper
+
+@{
+    Uposlenik username = Context.GetLogiraniKorisnik();
+}
+@if (username == null || username.VrstaUposlenikaId == 2)
+{
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+}
+
+<div style="margin-top:60px;">
+
+
+    <div style="display:inline-block;margin-top:25px;">
+        <h3 style="margin-bottom: 25px; text-align: center;">Poslovnice</h3>
+        @await Component.InvokeAsync("Kontakt")
+    </div>
+
+    <div class="col-md-5" style="float:left;box-shadow: 0 4px 8px rgba(0,0,0,.08)">
+        <div class="form-area">
+            <form id="forma" akcija="/Home/Snimi" role="form">
+                <br style="clear:both">
+                <h2 style="margin-bottom: 25px; text-align: center;">Kontaktirajte nas putem web forme</h2>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="name" required oninvalid="this.setCustomValidity('Ime je obavezno!')"
+                           oninput="this.setCustomValidity('')" name="ime" placeholder="Vaše ime">
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" id="email" name="email" required oninvalid="this.setCustomValidity('Email je obavezan!')"
+                           oninput="this.setCustomValidity('')" placeholder="Vaš email">
+                </div>
+
+
+                <div class="form-group">
+                    <textarea class="form-control" type="textarea" name="poruka" id="poruka" required oninvalid="this.setCustomValidity('Niste unijeli poruku!')"
+                              oninput="this.setCustomValidity('')" placeholder="Vaša poruka" maxlength="140" rows="7"></textarea>
+                </div>
+
+                <button type="button" id="kec" class="btn btn-primary pull-right">Pošalji poruku</button>
+
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $("#name").change(function () {
+        $("#name").removeClass('error');
+
+    });
+    $("#email").change(function () {
+        $("#email").removeClass('error');
+
+    });
+    $("#poruka").change(function () {
+        $("#poruka").removeClass('error');
+
+    });
+
+    $("#kec").click(function (e) {
+
+
+
+        function validateEmail($email) {
+            var emailReg = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,6})?$/;
+            return emailReg.test($email);
+        }
+
+
+         if ($("#email").val().length == 0 || $("#name").val().length == 0 || $("#poruka").val().length == 0) {
+
+             bootbox.alert("<b>Molimo Vas da unesete sva tražena polja!<b>");
+             if ($("#name").val().length == 0) {
+                 $("#name").addClass('error');
+
+             }
+             if ($("#email").val().length == 0) {
+                 $("#email").addClass('error');
+
+             }
+             if ($("#poruka").val().length == 0) {
+                 $("#poruka").addClass('error');
+
+             }
+
+
+         }
+
+         else if (!validateEmail($("#email").val())) {
+
+            bootbox.alert("<b>Molimo Vas da unesete validnu email adresu !<b>");
+             $("#email").addClass('error');
+
+
+
+        }
+        else {
+
+            bootbox.dialog({
+
+                message: '<b>Hvala na kontaktiranju, naš tim će se potruditi da što prije odgovori na Vaš upit.   \nLijep pozdrav!<b>',
+                title: 'AUTO KUĆA \"NER\"'
+
+
+
+            });
+
+            $.ajax({
+                type: 'POST',
+                chache: false,
+                url: $("#forma").attr('akcija'),
+                data: $("#forma").serialize(),
+                success: function (data) {
+                    setTimeout(function () { location.href = "/Home/Index" }, 3000);
+
+                }
+            });
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        });
+
+
+
+</script>
+
+

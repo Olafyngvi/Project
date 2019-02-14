@@ -1,0 +1,28 @@
+﻿@model IQueryable<AutoServis.Models.VoziloProdaja>
+@{
+    ViewData["Title"] = "Default";
+}
+
+
+<div class="col-sm-8" >
+    <h2 style="padding:1px 20px; box-sizing:border-box; background-color:#2E74AE;display:inline;color:#fff;">VOZILA NA AKCIJI</h2>
+    <div style="width:71%;height:2px;background-color:#2E74AE;margin-bottom:5px;margin-top:0.6px;"></div>
+    @foreach (var item in Model)
+    {
+
+
+        <div style="display:inline-block;">
+            <div class="panel panel-primary" style="width:195px;">
+                <div style="text-align:center"> @Html.DisplayFor(modelItem => item.Model.marka.Nazvi)  @Html.DisplayFor(modelItem => item.Model.Naziv) </div>
+                <div class="panel-body"><center><img src="@Html.DisplayFor(modelItem=>item.Slika)" class="img-responsive" style="width:100%;height:110px" alt="Image"></center></div>
+                <div class="panel-footer"> <a asp-area="" asp-controller="AutomobiliKlijent" asp-action="Details2" style="width:150px" asp-route-id="@item.VoziloProdajaID" class="btn btn-default btn-lg btn-block">Detalji vozila</a> </div>
+            </div>
+        </div>
+
+
+
+
+    }
+
+</div>
+

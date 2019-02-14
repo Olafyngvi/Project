@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Http
+@model IEnumerable<AutoServis.Models.Order>
+
+<div style="margin-left:2%">
+    <div class="dropdown">
+        <a class="glyphicon glyphicon-triangle-bottom fa-2x" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        </a>
+        <b style="float:left">Ukupno narudžbi: @ViewBag.Ukupno</b><br />
+        <b style="float:left">Ukupno zarada: @ViewBag.Zarada KM</b><br />
+        <b style="float:left">Ukupno zarada trenutni mjesec: @ViewBag.ZaradaTrenutni KM</b>
+        <div style="display:inline" class="col-xs-3 col-xs-offset-9">
+            <form asp-controller="Order" asp-action="Parcijalni" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#app">
+                <input type="text" name="pretraga" id="box" style="height:43px" class="rounded border-primary" />
+                <input type="submit" value="Pretraga" class="btn btn-primary" />
+            </form>
+        </div>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#app" class="dropdown-item" asp-controller="Order" asp-action="Parcijalni" asp-route-zavrsene="false">Na cekanju</a>
+            <a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#app" class="dropdown-item" asp-controller="Order" asp-action="Parcijalni" asp-route-zavrsene="true">Zavrsene</a>
+
+        </div>
+    </div>
+    <div id="app">
+
+        @Html.Partial("_Narudzbe", Model)
+        <div id="content">
+        </div>
+    </div>
+</div>

@@ -1,0 +1,123 @@
+﻿@model AutoServis.ViewModels.PopravkaStavkeVM
+
+
+<h1 style="display:inline;">Evidentiranje popravke</h1>
+
+<a id="IdiNaRacun" onclick="prin();" style="float:right;" class="btn btn-primary">Printaj račun</a>
+
+
+
+<div style="height:150px;width:100%;padding:30px 0;box-sizing:border-box;border-bottom:4px double rgba(103, 103, 103,0.2); background-color:ghostwhite;margin-top:25px;">
+    <div style="height:100%;width:33%;float:left;">
+        <center><h4><b>Broj popravke</b></h4><br /></center>
+        <center><span style="font-size:17px;"><b>@Model.BrojPopravke</b></span></center>
+
+    </div>
+
+
+    <div style="height:100%;width:33%;float:left;">
+        <center><h4><b>Poslovnica</b></h4><br /></center>
+        <center><span style="font-size:17px;"><b>@Model.poslovnica</b></span></center>
+
+    </div>
+
+    <div style="height:100%;width:33%;float:left;">
+        <center><h4><b>Datum popravke</b></h4><br /></center>
+        <center><span style="font-size:17px;"><b>@Model.datum</b></span></center>
+
+    </div>
+
+</div>
+
+
+<div style="height:400px;width:30%;padding:30px 20px;box-sizing:border-box;border-right:1px ridge rgba(103, 103, 103,0.2); float:left; background-color:whitesmoke;">
+    <form action="/Popravka/DodajStavku" ajax-rezultat="nekiDiv" method="post" ajax-poziv="da">
+        <div style="display:none">
+            <input type="hidden" value="@Model.IDPopravke" name="popID" />
+            <input type="hidden" value="@Model.RID" name="Rid" />
+            <input type="hidden" value="@Model.BrojPopravke" name="PopravkaBr" />
+            <input type="hidden" value="@Model.cijena" name="cijenaPopravke" />
+            <input type="hidden" value="@Model.datum" name="DatumPopa" />
+        </div>
+
+        <div class="input-group input-group-lg">
+            <div class="input-group-prepend ">
+                <label class="input-group-text" style="font-size:1.3em;" for="dio">Dio</label>
+            </div>
+            <select style="height:50px;font-size:1.3em" class="form-control"  name="dio" id="dio" asp-items="ViewBag.dijelovi">
+                <option    value="-1">Odaberi</option>
+
+            </select>
+        </div>
+        <br />
+        <br />
+        <div class="input-group input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-lg" style="font-size:1.3em;">Količina </span>
+            </div>
+            <input type="number" class="form-control" min="1" step="1" clearbox="da" value="1" name="kolicina" aria-label="Sizing example input" style="font-size:1.3em;" aria-describedby="inputGroup-sizing-lg">
+        </div>
+
+
+        <br />
+        <br />
+        <div class="col-md-9">
+            <input type="submit" id="btnDodaj" value="Dodaj stavku >>" style="font-size:1.5em;" class="btn btn-primary" />
+        </div>
+
+
+
+    </form>
+</div>
+
+<div id="nekiDiv" style="padding:30px 20px;box-sizing:border-box;overflow:scroll; float:left;width:70%;height:400px;background-color:whitesmoke;">
+    <h2 style="margin-left:10px;">Dodane stavke</h2>
+
+
+
+    <table class="table table-active">
+        <thead>
+            <tr>
+                <th><center><b>Dio</b></center></th>
+                <th><center><b>Cijena / kom</b></center></th>
+                <th><center><b>Količina</b></center></th>
+                <th><center><b>Akcija</b></center></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+</div>
+
+<script>
+
+    $("form[ajax-poziv='da']").submit(function (event) {
+        event.preventDefault();
+
+        var forma = $(this);
+        var r = forma.attr("ajax-rezultat");
+        var url = forma.attr("action");
+
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: url,
+            dataType: "html",
+            data: forma.serialize(),
+
+            success: function (rez) {
+                $("input[clearbox='da']").val("1");
+                $("#sltDio").val("-1");
+
+                $("#" + r).html(rez);
+            }
+
+        });
+
+    });
+
+    function prin() {
+        primjena();
+    }
+
+</script>

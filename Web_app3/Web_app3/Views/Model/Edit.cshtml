@@ -1,0 +1,27 @@
+﻿@model AutoServis.Models.Model
+
+<h2>Uređivanje</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ModelId" />
+            <table class="table table-bordered" style="box-shadow: 0 4px 8px rgba(0,0,0,.08)">
+                <tr>
+                    <td> <label asp-for="Naziv" class="control-label">Naziv Modela</label></td>
+                    <td><input asp-for="Naziv" class="form-control" /></td>
+                    <span asp-validation-for="Naziv" class="text-danger"></span>
+                </tr>
+                <tr>
+                    <td><label asp-for="MarkaID" class="control-label">Naziv Marke</label></td>
+                    <td><select style="height:40px" asp-for="MarkaID" class="form-control" asp-items="ViewBag.MarkaID"><option></option></select></td>
+                </tr>
+            </table>
+            <div class="form-group">
+                <input type="submit" value="Sačuvaj" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

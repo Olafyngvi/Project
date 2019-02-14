@@ -1,0 +1,132 @@
+﻿@model AutomobiliPaging<AutoServis.Models.VoziloProdaja>
+@using AutoServis.Helper
+
+
+@{
+    Uposlenik username = Context.GetLogiraniKorisnik();
+}
+@if (username == null || username.VrstaUposlenikaId == 2)
+{
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+}
+
+<div class="container-fluid" style="margin-top:50px;">
+
+
+    <div class="col-lg-8" style="display:inline-block;">
+        @foreach (var item in Model)
+        {
+
+
+            <div class="col-lg-4" style="display:inline-block">
+                <div class="panel panel-primary">
+                    <div class="panel-heading"> @Html.DisplayFor(modelItem => item.Model.marka.Nazvi)  @Html.DisplayFor(modelItem => item.Model.Naziv)      Godina @Html.DisplayFor(modelItem => item.DatumProizvodnje.Year)</div>
+                    <div class="panel-body"><center><img src="@Html.DisplayFor(modelItem=>item.Slika)" class="img-responsive" style="height:150px" alt="Image"></center></div>
+                    <div class="panel-footer"> <a asp-action="Details2" asp-controller="AutomobiliKlijent" asp-route-id="@item.VoziloProdajaID" asp-area="" class="btn btn-default btn-lg btn-block">Detalji vozila</a> </div>
+                </div>
+            </div>
+
+
+
+
+        }
+        @{
+            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+        }
+        <div class="col-lg-2" style="float:right;margin-bottom:5px;">
+            <a asp-action="Index" asp-controller="AutomobiliKlijent" asp-area=""
+               asp-route-page="@(Model.TrenutnaStranica - 1)" title="Nazad"
+               class="btn btn-default @prevDisabled">
+                <span class="glyphicon glyphicon-arrow-left"></span>
+            </a>
+            <a asp-action="Index" asp-controller="AutomobiliKlijent" asp-area="" title="Naprijed"
+               asp-route-page="@(Model.TrenutnaStranica + 1)"
+               class="btn btn-default @nextDisabled">
+                <span class="glyphicon glyphicon-arrow-right"></span>
+            </a>
+        </div>
+    </div>
+
+    <div id="forma" class="col-sm-3" style="float:left;">
+        <form method="get" asp-controller="AutomobiliKlijent" asp-action="Index">
+            <div class="form-group">
+                <select id="marka" class="form-control" name="MarkaID" style="height:40px;" asp-items="ViewBag.MarkaID">
+                    <option value="">Marka</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <select class="form-control" id="model" name="ModelID" style="height:40px;display:none" asp-items='@new SelectList("ModelId","Naziv")'><option value="">Svi modeli</option></select>
+            </div>
+            <div class="form-group">
+
+                <select class="form-control" name="TipVoziilaID" style="height:40px" asp-items="ViewBag.TipVozilaID">
+                    <option value="">Tip vozila</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+
+                <select class="form-control" name="TransmisijaID" style="height:40px" asp-items="ViewBag.TransmisijaID">
+                    <option value="">Transmisija</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input class="form-control" placeholder="Godina proizvodnje" type="text" name="godina" />
+            </div>
+
+            <div class="form-group">
+                <button type="submit" style="width:100%" class="btn btn-primary">Pretraži</button>
+            </div>
+        </form>
+    </div>
+
+
+
+
+
+</div>
+
+
+<script>
+    $(function () {
+
+
+
+        $("#marka").change(function () {
+            var id = $(this).children(":selected").attr("value");
+            if (id != "") {
+                $.getJSON("/AutomobiliKlijent/VratiModele?id=" + id, function (rez) {
+                    var items = '';
+                    $("#model").empty();
+                    $.each(rez, function (i, red) {
+                        items += "<option value='" + red.value + "'>" + red.text + "</option>"
+
+                    });
+                    $("#model").html(items);
+                });
+                var model = document.getElementById("model");
+                model.style.display = "block";
+
+
+
+            }
+            else {
+                var model = document.getElementById("model");
+                model.style.display = "none";
+
+            }
+        });
+    });
+</script>
+
+
+
+
+
+
+

@@ -1,0 +1,78 @@
+﻿@model AutoServis.ViewModels.UrediUposlenikVM
+
+<div style="background-color:whitesmoke;width:600px;margin:20px auto;padding:20px 90px;box-sizing:border-box">
+    <center><h2>Detalji</h2></center>
+    <form action="/AdministratorModul/Uposlenik/snimi" method="post">
+        <table>
+            <tr>
+
+                <td><input type="hidden" name="id" value="@Model.stavID" class="form-group" /></td>
+            </tr>
+            <tr>
+                <td style="width:250px;"><label for="ime" class="form-group">Ime</label></td>
+                <td><input type="text" name="ime" value="@Model.ime" class="form-group" readonly /></td>
+            </tr>
+
+            <tr>
+                <td><label for="prezime" class="form-group">Prezime</label></td>
+                <td><input type="text" name="prezime" value="@Model.prezime" class="form-group" readonly /></td>
+            </tr>
+            <tr>
+                <td><label for="adresa" class="form-group">Adresa</label></td>
+                <td><input type="text" name="adresa" value="@Model.adresa" class="form-group" readonly /></td>
+            </tr>
+            <tr>
+                <td><label for="Kime" class="form-group">Korisnicko ime</label></td>
+                <td><input type="text" name="Kime" value="@Model.Koris" class="form-group" readonly /></td>
+            </tr>
+            <tr>
+                <td><label for="loz" class="form-group">Lozinka</label></td>
+                <td><input type="text" name="loz" value="@Model.loz" class="form-group" readonly /></td>
+            </tr>
+            <tr>
+                <td><label for="tel" class="form-group">Telefon</label></td>
+                <td><input type="text" name="tel" value="@Model.tel" class="form-group" readonly /></td>
+            </tr>
+
+            <tr>
+                <td><label for="datumZaposljavanja" class="form-group">Datum zapošljavanja</label></td>
+                <td><input type="date" name="datumZaposljavanja" value="@Model.dz" class="form-group" style="width:170px;height:25px;" readonly /></td>
+            </tr>
+            <tr>
+                <td><label for="jmbg" class="form-group">JMBG</label></td>
+                <td><input type="text" name="jmbg" value="@Model.jmbg" class="form-group" readonly /></td>
+            </tr>
+
+            <tr>
+                <td><label for="DatumRodjenja" class="form-group">Datum rođenja</label></td>
+                <td><input type="date" name="DatumRodjenja" value="@Model.dr" class="form-group" style="width:170px;height:25px;" readonly /></td>
+            </tr>
+        </table>
+        <br />
+        <div style="width:45%;float:left;">
+            <label for="poslovnica" class="form-group" style="text-align:center;">Poslovnica</label>
+            <br />
+            <input type="text" name="poslovnica" value="@Model.posl" class="form-group" style="width:170px;height:25px;" readonly />
+        </div>
+        <div style="width:45%;float:left;">
+            <label for="Vrsta" class="form-group">Vrsta uposlenika</label>
+            <br />
+            <input type="text" name="Vrsta" value="@Model.vrsta" class="form-group" style="width:170px;height:25px;" readonly />
+
+        </div>
+
+
+        <div style="width:45%;float:left;">
+            <label for="Grad" class="form-group">Grad</label>
+            <br />
+            <input type="text" name="Grad" value="@Model.grad" class="form-group" style="width:170px;height:25px;" readonly />
+
+        </div>
+
+        <a data-ajax="true" data-ajax-update="#content" data-ajax-mode="replace" asp-action="Uredi" asp-controller="Uposlenik" asp-area="" asp-route-id="@Model.stavID" class="btn btn-success">Uredi</a>
+    </form>
+
+</div>
+ 
+
+

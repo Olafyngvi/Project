@@ -1,0 +1,66 @@
+﻿@model AutoServis.Models.Marka
+
+<h2>Uređivanje zapisa- Marke</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form id="forma"  action="/MenadžerAutomobila/UpdateMarka">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MarkaId" />
+            <div class="form-group">
+                <label asp-for="Nazvi" class="control-label">Naziv</label>
+                <input asp-for="Nazvi" class="form-control" />
+                <span asp-validation-for="Nazvi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Sačuvaj" class="btn btn-success" />
+                <a id="btnNazad" class="btn btn-default">Nazad na listu</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    $("#btnNazad").click(function (event) {
+        $.get("/MenadžerAutomobila/IndexMarka",
+            function (rez, status) {
+
+                $("#samko").html(rez);
+
+            }
+        );
+
+    });
+
+    $("form#forma").on('submit', function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            cache: false,
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function (data) {
+                toastr.options.positionClass = 'toast-top-left';
+                toastr.options.timeOut = 3000;
+                toastr.options.fadeOut = 350;
+                toastr.options.fadeIn = 350;
+
+
+                $.get("/MenadžerAutomobila/IndexMarka",
+                    function (rez, status) {
+            
+                        $("#samko").html(rez);
+                    });
+                toastr.info("Podatci uređeni!");
+
+            }
+        });
+
+    });
+
+   
+
+</script>
+

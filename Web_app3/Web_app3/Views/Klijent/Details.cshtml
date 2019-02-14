@@ -1,0 +1,98 @@
+﻿@model AutoServis.ViewModels.KlijentEdit
+
+@foreach (var x in Model.lista)
+{
+<div style="background-color:whitesmoke;width:600px;height:600px;margin:20px auto;padding:20px 90px;box-sizing:border-box">
+    <center><h2><b>Detalji klijenta</b></h2></center>
+    <br />
+
+    <form  method="post">
+        <table>
+            <input id="id" name="id" type="hidden" value="@x.Id" />
+
+            <tr>
+                <td style="width:250px;"><label for="ime" class="form-group">Ime</label></td>
+                <td><input type="text" name="ime" class="form-group" value="@x.Ime" readonly/></td>
+            </tr>
+
+            <tr>
+                <td><label for="prezime" class="form-group">Prezime</label></td>
+                <td><input type="text" name="prezime" class="form-group" value="@x.Prezime" readonly/></td>
+            </tr>
+            <tr>
+                <td><label for="adresa" class="form-group">Adresa</label></td>
+                <td><input type="text" name="adresa" class="form-group" value="@x.Adresa" readonly/></td>
+            </tr>
+            <tr>
+                <td><label for="Kime" class="form-group">Korisnicko ime</label></td>
+                <td><input type="text" name="Kime" class="form-group" value="@x.KorisnickoIme" readonly/></td>
+            </tr>
+            <tr>
+                <td><label for="loz" class="form-group">Lozinka</label></td>
+                <td><input type="text" name="loz" class="form-group" value="@x.Lozinka" readonly/></td>
+            </tr>
+            <tr>
+                <td><label for="tel" class="form-group">Telefon</label></td>
+                <td><input type="text" name="tel" class="form-group" value="@x.Telefon"readonly/></td>
+            </tr>
+            <tr>
+                <td><label for="BrojNarudzbi" class="form-group">Broj narudzbi</label></td>
+                <td><input type="text" name="BrojNarudzbi" class="form-group" style="width:170px;height:25px;" value="@x.BrojNarudzbi" readonly /></td>
+            </tr>
+            
+            
+
+            <tr>
+                <td><label for="DatumRodjenja" class="form-group">Datum registracije</label></td>
+                <td><input type="text" name="DatumRodjenja" class="form-group" style="width:170px;height:25px;" value="@x.Datum" readonly/></td>
+            </tr>
+
+            <tr>
+                <td> <label for="Grad" class="form-group">Grad</label></td>
+
+                <td>
+                    <input type="text" name="DatumRodjenja" class="form-group" style="width:170px;height:25px;" value="@x.Grad" readonly/>
+                </td>
+
+
+
+            </tr>
+            <tr>
+                <td>
+                    @foreach (var z in Model.lista)
+    {
+                <a asp-action="Edit" asp-route-id="@z.Id" class="btn btn-primary">Izmijeni</a>
+                <a asp-action="Index" class="btn btn-info">Nazad na listu</a>
+}
+                </td>
+       
+
+                   
+               
+            </tr>
+
+        </table>
+       
+        
+
+
+
+
+
+
+
+
+
+
+
+
+    </form>
+
+
+
+</div>
+
+}
+<div>
+   
+</div>

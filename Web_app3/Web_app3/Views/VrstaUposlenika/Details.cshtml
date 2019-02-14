@@ -1,0 +1,20 @@
+﻿@model AutoServis.Models.VrstaUposlenika
+
+<h2>Details</h2>
+
+<div>
+    <h4>VrstaUposlenika</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Naziv)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Naziv)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-controller="VrstaUposlenika" asp-area="" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

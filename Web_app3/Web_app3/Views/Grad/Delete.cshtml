@@ -1,0 +1,22 @@
+﻿@model AutoServis.Models.Grad
+
+<h2>Brisanje</h2>
+
+<h3>Jeste li sigurni da zelite obrisati grad?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Naziv)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Naziv)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete" asp-controller="Grad" asp-area="">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" value="Delete" class="btn btn-primary">Brisi</button>
+        <a asp-action="Index" class="btn btn-default">Nazad na listu</a>
+    </form>
+</div>

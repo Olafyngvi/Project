@@ -1,0 +1,94 @@
+﻿@model AutoServis.ViewModels.KlijentEdit
+
+<h2>Edit</h2>
+
+
+<hr />
+
+@foreach (var k in Model.lista)
+{
+<div style="background-color:whitesmoke;width:600px;height:600px;margin:20px auto;padding:20px 90px;box-sizing:border-box">
+    <center><h2><b>Uredjivanje klijenta</b></h2></center>
+    <br />
+    <form action="/Klijent/Update" method="post">
+        <table>
+            <input id="id" name="id" type="hidden" value="@k.Id" />
+
+            <tr>
+                <td style="width:250px;"><label  class="form-group" for="ime">Ime</label></td>
+                <td> <input  class="form-group" id="ime" name="ime" type="text" value="@k.Ime" /></td>
+            </tr>
+            
+
+            <tr>
+                <td><label  class="form-group" for="prezime">Prezime</label></td>
+
+                <td> <input  class="form-group" data-val="true" id="prezime" name="prezime" type="text" value="@k.Prezime" /></td>
+
+            </tr>
+
+            <tr>
+                <td><label  class="form-group" for="adresa">Adresa</label></td>
+
+                <td><input  class="form-group" id="adresa" name="adresa" type="text" value="@k.Adresa" /></td>
+
+            </tr>
+
+            <tr>
+                <td><label  class="form-group" for="Kime">Korisnicko Ime</label></td>
+
+                <td> <input  class="form-group" data-val="true" id="Kime" name="Kime" type="text" value="@k.KorisnickoIme" /></td>
+
+            </tr>
+            <tr>
+                <td>
+                    <label  class="form-group"for="loz">Lozinka </label>
+                </td>
+
+                <td><input   class="form-group"data-val="true" id="loz" name="loz" type="text" value="@k.Lozinka" /></td>
+
+            </tr>
+
+            <tr>
+                <td><label   class="form-group"for="tel">Telefon </label></td>
+
+                <td><input   class="form-group"data-val="true" id="tel" name="tel" type="text" value="@k.Telefon" /></td>
+
+            </tr>
+
+            <tr>
+                <td><label  class="form-group"for="Grad" >Grad</label></td>
+
+                <td>
+                    <select name="Grad">
+                        @foreach (var g in Model.gradovi)
+                        {
+                            <option value="@g.Value">@g.Text </option>
+
+                        }
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td><label  class="form-group" for="DatumRegistracije">Datum Registracije</label></td>
+
+                <td> <input   class="form-group"data-val="true" id="DatumRegistracije" name="DatumRegistracije" type="text" value="@k.Datum" /></td>
+
+            </tr>
+
+            <tr>
+                <td><input type="submit" value="Snimi" class="btn btn-success" /></td>
+            </tr>
+
+
+        </table>
+    </form>
+</div>
+
+
+
+
+}
+
+

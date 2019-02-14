@@ -1,0 +1,27 @@
+﻿@model AutoServis.Models.Marka
+
+@{
+    Layout = null;
+}
+
+<h2>Dodavanje</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Marka" asp-action="Dodaj">
+            <div class="form-group">
+                <label  class="control-label">Naziv</label>
+                <input asp-for="Nazvi"required placeholder="Unesi naziv" 
+                                      oninvalid="this.setCustomValidity('Naziv je obavezan!')"
+                                      oninput="this.setCustomValidity('')" class="form-control" style="box-shadow: 0 4px 8px rgba(0,0,0,.08)" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Sačuvaj" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

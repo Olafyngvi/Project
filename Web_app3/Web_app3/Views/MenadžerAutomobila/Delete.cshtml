@@ -1,0 +1,126 @@
+﻿@model AutoServis.Models.VoziloProdaja
+
+<h2>Da li ste sigurni da želite arhivirat podatke o ovome vozilu?</h2>
+
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Datum proizvodnje:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DatumProizvodnje)
+        </dd>
+        <dt>
+            Kilometraža:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Kilometraza) km
+
+        </dd>
+        <dt>
+            Kubikaža:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Kubikaza) cca
+        </dd>
+        <dt>
+            Snagaa motora:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SnagaMotora) KS/kW
+        </dd>
+        <dt>
+            Cijena:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Cijena) KM
+        </dd>
+        <dt>
+            Prodato:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.isDeleted)
+        </dd>
+        <dt>
+            Broj vrata:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BrojVrata.Naziv)
+        </dd>
+        <dt>
+            Gorivo:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Gorivo.Naziv)
+        </dd>
+        <dt>
+            Model:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Model.Naziv)
+        </dd>
+        <dt>
+            Marka:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Model.marka.Nazvi)
+        </dd>
+        <dt>
+            Oprema:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Oprema.Naziv)
+        </dd>
+        <dt>
+            Tip vozila:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TipVozila.Naziv)
+        </dd>
+        <dt>
+            Transmisija:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Transmisija.Naziv)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a  atribut="@Model.VoziloProdajaID" class="btn btn-success BtnDetalji">DA</a> |
+    <a class="btn btn-default BtnNazad">Nazad</a>
+</div>
+
+
+<script>
+    $(".BtnDetalji").click(function (event) {
+
+        var btn = $(this);
+        var id = btn.attr("atribut");
+
+        $.get("/MenadžerAutomobila/Obrisi?id=" + id,
+            function (rez, status) {
+                toastr.options.positionClass = 'toast-top-left';
+                toastr.options.timeOut = 3000;
+                toastr.info("Podatci o vozilu arhivirani!");
+
+                $("#samko").html(rez);
+            });
+
+    });
+    $(".BtnNazad").click(function (event) {
+
+       
+
+        $.get("/MenadžerAutomobila/Index",
+            function (rez, status) {
+                $("#samko").html(rez);
+            });
+
+    });
+</script>
+
+
+

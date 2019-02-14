@@ -1,0 +1,64 @@
+﻿@model AutoServis.Models.Model
+
+<h2>Uređivanje zapisa- Modeli</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form action="/MenadžerAutomobila/UpdateModel">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ModelId" />
+            <div class="form-group">
+                <label asp-for="Naziv" class="control-label">Naziv modela</label>
+                <input asp-for="Naziv" class="form-control" />
+                <span asp-validation-for="Naziv" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MarkaID" class="control-label">Marka</label>
+                <select asp-for="MarkaID" style="height:35px;" class="form-control" asp-items="ViewBag.MarkaID"></select>
+                <span asp-validation-for="MarkaID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Sačuvaj" class="btn btn-primary " />
+                <a class="btn btn-default btnNazad">Nazad na listu</a>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $(".btnNazad").click(function (event) { 
+        $.get("/MenadžerAutomobila/IndexModel",
+            function (rez, status) {
+                $("#samko").html(rez);
+            });
+    });
+
+    $('form').on('submit', function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            cache: false,
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function (data) {
+                toastr.options.positionClass = 'toast-top-left';
+                toastr.options.timeOut = 3000;
+                toastr.options.fadeOut = 350;
+                toastr.options.fadeIn = 350;
+
+           
+
+                $.get("/MenadžerAutomobila/IndexModel",
+                    function (rez, status) {
+                    
+                        $("#samko").html(rez);
+                    });
+                toastr.info("Podatci uređeni!");
+            }
+        });
+
+    });
+</script>
+

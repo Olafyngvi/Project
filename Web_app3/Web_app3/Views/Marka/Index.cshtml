@@ -1,0 +1,96 @@
+﻿@model ReflectionIT.Mvc.Paging.PagingList<AutoServis.Models.Marka>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *, ReflectionIT.Mvc.Paging
+
+<center><h2>Marke</h2></center>
+<div style="margin-left:2%">
+    <div class="form-inline">
+        <a asp-controller="Order" asp-action="Index" class="btn btn-primary btn-sm">
+            <span class="glyphicon glyphicon-arrow-left"></span>
+        </a>
+        <a asp-controller="Marka" asp-action="Dodaj" data-ajax="true" data-ajax-update="#app" style="margin-left:2px" class="btn btn-primary btn-sm">
+            <span class="glyphicon glyphicon-plus"></span>Dodaj
+        </a>
+        <form method="get" class="form-inline" style="margin-left:20px">
+            <input name="search" class="form-control" placeholder="Pretraga"
+                   value="@Model.RouteValue["Filter"]" style="height:40px" />
+            <button type="submit" class="btn btn-primary btn-sm">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Pretrazi
+            </button>
+        </form>
+    </div>
+    <div class="table-responsive ">
+        <table id="marke" class="table table-bordered table-condensed table-striped table-hover table-responsive-sm" style="width:80%;box-shadow: 0 4px 8px rgba(0,0,0,.08)">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.SortableHeaderFor(model => model.Nazvi, this.Model)
+                    </th>
+                    <th>
+                        <center>Akcija</center>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nazvi)
+                        </td>
+                        <td style="width:200px">
+                            <center>
+                                <a asp-action="Edit" asp-route-id="@item.MarkaId" data-ajax="true" data-ajax-update="#app" class="btn btn-primary btn-xs">Izmjeni</a> |
+                                <a naziv="@item.Nazvi" atribut="@item.MarkaId" id="js-obrisi" class="btn btn-primary btn-xs js-obrisi">Obrisi</a>
+                            </center>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <nav>
+        @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model })
+    </nav>
+    <div id="app">
+
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#marke .js-obrisi").on("click", function () {
+            toastr.options.positionClass = 'toast-bottom-left';
+            var button = $(this);
+            bootbox.confirm({
+                title: "Brisanje Marke ?",
+                message: "Da li zelite da obrišete " + button.attr("naziv") + " ?",
+                buttons: {
+                    cancel: {
+                        label: '<i class="fa fa-times"></i> Ne'
+                    },
+                    confirm: {
+                        label: '<i class="fa fa-check"></i> Da'
+                    }
+                },
+                callback: function (result) {
+                    if (result == true) {
+                        $.ajax({
+                            url: "Delete?id="+ button.attr("atribut"),
+                            method: "Delete",
+                            success: function () {
+                                toastr.success("Dio uspjesno izbrisan .", "Obavijest :");
+                                setTimeout(function () {
+                                    window.location.replace('Index');
+                                }, 2000);
+
+                            },
+                            error: function () {
+                                toastr.error("Nešto neočekivano se degodilo!", "Obavijest :");
+                            }
+                        })
+                    };
+                }
+            });
+        })
+    })
+</script>

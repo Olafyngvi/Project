@@ -1,0 +1,87 @@
+﻿@model IEnumerable<AutoServis.Models.Popravke>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+}
+<h1 style="float:left;"> Pregled i pretraga popravki </h1>
+
+
+<div style="height:70px;width:100%;background-color:whitesmoke;float:left;margin-top:20px;">
+    <div style="width:70%;height:100%;float:left;padding:20px 0 0 80px;box-sizing:border-box;">
+        <form asp-action="Pretraga" ajax-poziv="da" ajax-rezultat="Content">
+            <input type="text" name="brojPop" style="width:200px;height:35px;font-size:20px; padding:0 0 0 30px;box-sizing:border-box;border:none;border-bottom:2px solid gray;" placeholder="Broj popravke" />
+            <input type="submit" value="Pretraži" class="btn btn-primary"  style="width:120px;height:40px;border:none;font-size:18px;padding:5px 20px;box-sizing:border-box;margin-left:100px;"/>
+
+        </form>
+    </div>
+  
+    
+</div>
+<div id="Content" style="width:100%;height:auto;display:none;float:left;">
+
+
+</div>
+<table class="table" style="text-align:center;margin-top:20px;">
+    <thead class="thead-dark">
+        <tr>
+            <th style="font-size:1.5em;">
+                @Html.DisplayName("Broj popravke")
+            </th>
+            <th style="font-size:1.5em;">
+                @Html.DisplayName("Datum popravke")
+            </th>
+           
+            <th style="font-size:1.5em;">Akcija</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="font-size:1.8em;padding-top:20px;">
+                    @Html.DisplayFor(modelItem => item.BrojPopravke)
+                </td>
+                <td style="font-size:1.8em;padding-top:20px;">
+                    @Html.DisplayFor(modelItem => item.DatumPopravke)
+                </td>
+              
+                <td style="position:center;">
+                    <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.PopravkeId">Detalji</a> 
+                 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+
+    $("form[ajax-poziv='da']").submit(function (event) {
+        event.preventDefault();
+
+        var forma = $(this);
+        var r = forma.attr("ajax-rezultat");
+        var url = forma.attr("action");
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: "html",
+            data: forma.serialize(),
+
+            success: function (rez) {
+               
+
+                $("#" + r).html(rez);
+                $("#" + r).css("display", "block");
+            }
+
+        });
+
+    });
+
+
+
+</script>
+
+

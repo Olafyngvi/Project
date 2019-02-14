@@ -1,0 +1,73 @@
+﻿@model ShoppingCartVM
+
+@using AutoServis.Helper
+
+@{
+    Uposlenik username = Context.GetLogiraniKorisnik();
+}
+@if (username == null || username.VrstaUposlenikaId == 2)
+{
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+}
+<div class="container">
+    <h2>Vaša korpa</h2>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Količina</th>
+                <th>Dio</th>
+                <th class="text-right">Cijena</th>
+                <th class="text-right">Subtotal</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var line in Model.ShoppingCart.ShoppingCartItems)
+            {
+                <tr>
+                    <td class="text-center">
+                            <div class="d-inline-block" style="margin-right:15px">
+                                <a class="glyphicon glyphicon-minus"
+                                  asp-area="" asp-controller="ShoppingCart"
+                                   asp-action="RemoveFromShoppingCart"
+                                   asp-route-DioID="@line.Dio.DioId"></a>
+                            </div>
+                            <div class="d-inline-block"><h3>@line.Amount</h3></div>
+                            <div class="d-inline-block" style="margin-left:15px">
+                                <a class="glyphicon glyphicon-plus float-md-right"
+                                asp-area=""   asp-controller="ShoppingCart"
+                                   asp-action="Increment"
+                                   asp-route-DioID="@line.Dio.DioId"></a>
+                            </div>
+                    </td>
+                    <td class="text-left">@line.Dio.Naziv</td>
+                    <td class="text-right">@line.Dio.Cijena.ToString() KM</td>
+                    <td class="text-right">
+                        @((line.Amount * line.Dio.Cijena).ToString()) KM
+                    </td>
+                    <td class="text-center">
+                        <a asp-area="KlijentModul" asp-controller="ShoppingCart" asp-action="RemoveAmount"
+                           asp-route-DioId="@line.Dio.DioId">Ukloni</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-right">Ukupno:</td>
+                <td class="text-right">
+                    @Model.ShoppingCartTotal.ToString() KM
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="text-right">
+        <div class="btn-group ">
+            <a class="btn btn-primary"  asp-area="" asp-controller="Narudzba" asp-action="Checkout">Završi</a>
+            <a asp-area="" asp-controller="Dijelovi" asp-action="List" class="btn btn-default">Nastavi kupovati</a>
+        </div>
+    </div>
+</div>

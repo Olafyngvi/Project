@@ -1,0 +1,112 @@
+﻿@model ReflectionIT.Mvc.Paging.PagingList<AutoServis.Models.Dio>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *, ReflectionIT.Mvc.Paging
+
+<center><h2>Dijelovi</h2></center>
+<div style="margin-left:2%">
+    <div class="form-inline">
+        <a asp-controller="Order" asp-action="Index" class="btn btn-primary btn-sm">
+            <span class="glyphicon glyphicon-arrow-left"></span>
+        </a>
+        <a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#content" asp-action="Create" style="margin-left:2px" class="btn btn-primary btn-sm">
+            <span class="glyphicon glyphicon-plus"></span>Dodaj
+        </a>
+        <form method="get" class="form-inline" style="margin-left:20px">
+            <input name="search" class="form-control" placeholder="Pretraga"
+                   value="@Model.RouteValue["Filter"]" style="height:40px" />
+            <button type="submit" class="btn btn-primary btn-sm">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Pretrazi
+            </button>
+        </form>
+    </div>
+    <div style="margin-right:200px">
+        <table id="dijelovi" class="table table-bordered table-condensed table-striped table-hover table-responsive-sm" style="box-shadow: 0 4px 8px rgba(0,0,0,.08);">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.SortableHeaderFor(model => model.Naziv, this.Model)
+                    </th>
+                    <th>
+                        @Html.SortableHeaderFor(model => model.Kategorija.Naziv) kategorije
+                    </th>
+                    <th>
+                        @Html.SortableHeaderFor(model => model.Cijena, this.Model)
+                    </th>
+                    <th>
+                        @Html.SortableHeaderFor(model => model.Sifra, this.Model)
+                    </th>
+                    <th>
+                        @Html.SortableHeaderFor(model => model.model.marka.Nazvi)
+                    </th>
+                    <th>
+                        @Html.SortableHeaderFor(model => model.model.Naziv, this.Model)
+                    </th>
+                    <th style="width:200px"><center>Akcija</center></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Naziv</td>
+                        <td>@if (item.Kategorija != null) {@item.Kategorija.Naziv}</td>
+                        <td>@item.Cijena</td>
+                        <td>@item.Sifra</td>
+                        <td>@item.model.marka.Nazvi</td>
+                        <td>@item.model.Naziv</td>
+                        <td style="width:200px">
+                            <center>
+                                <a data-ajax="true"  data-ajax-mode="replace" data-ajax-update="#content" asp-controller="Dio" asp-action="Edit" asp-route-id="@item.DioId" class="btn btn-primary btn-xs">Uredi</a>
+                                <a class="btn btn-primary btn-xs js-obrisi" naziv="@item.Naziv" atribut="@item.DioId" id="js-obrisi">Obriši</a>
+                            </center>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <nav>
+        @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model })
+    </nav>
+    <div id="content">
+
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#dijelovi .js-obrisi").on("click", function () {
+            toastr.options.positionClass = 'toast-bottom-left';
+            var button = $(this);
+            bootbox.confirm({
+                title: "Brisanje dijela ?",
+                message: "Da li zelite da obrišete " + button.attr("naziv") + " ?",
+                buttons: {
+                    cancel: {
+                        label: '<i class="fa fa-times"></i> Ne'
+                    },
+                    confirm: {
+                        label: '<i class="fa fa-check"></i> Da'
+                    }
+                },
+                callback: function (result) {
+                    if (result == true) {
+                        $.ajax({
+                            url: "Delete/" + button.attr("atribut"),
+                            method: "Delete",
+                            success: function () {
+                                toastr.success("Dio uspjesno izbrisan .");
+                                setTimeout(function () {
+                                    window.location.replace('Index');
+                                }, 2000);
+
+                            },
+                            error: function () {
+                                toastr.error("Something unexpected happened!");
+                            }
+                        })
+                    };
+                }
+            });
+        })
+    })
+</script>

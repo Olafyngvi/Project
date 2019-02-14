@@ -1,0 +1,46 @@
+﻿@model IEnumerable<AutoServis.Models.KontaktUpiti>
+
+<div class="table-responsive" style="margin-left:2%">
+    <h2>Upiti</h2>
+    <table class="table table-striped table-bordered table-hover table-condenseds" style="box-shadow: 0 4px 8px rgba(0,0,0,.08)">
+        <thead>
+            <tr>
+                <th>
+                    Ime i prezime
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Poruka)
+                </th>
+             
+                <th>Akcija</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ImePrezime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Poruka)
+                    </td>
+                   
+                
+                    <td>
+                        <a data-ajax="true" data-ajax-update="#content" asp-action="Detalji" asp-controller="Administrator" asp-area="" asp-route-id="@item.Id" class="btn btn-primary btn-xs">Detalji</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+    <div id="content">
+
+    </div>

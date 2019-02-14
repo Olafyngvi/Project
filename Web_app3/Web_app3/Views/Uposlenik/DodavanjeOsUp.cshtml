@@ -1,0 +1,125 @@
+﻿@model AutoServis.ViewModels.GradoviVM
+
+
+<div style="background-color:whitesmoke;width:600px;height:600px;margin:20px auto;padding:20px 90px;box-sizing:border-box">
+    <center><h2><b>Dodavanje uposlenika</b></h2></center>
+    <br />
+
+    <form action="/Uposlenik/snimi" method="post">
+        <table>
+
+            <tr>
+                <td style="width:250px;"><label for="ime" class="form-group">Ime</label></td>
+                <td><input type="text" name="ime" class="form-group" /></td>
+            </tr>
+
+            <tr>
+                <td><label for="prezime" class="form-group">Prezime</label></td>
+                <td><input type="text" name="prezime" class="form-group" /></td>
+            </tr>
+            <tr>
+                <td><label for="adresa" class="form-group">Adresa</label></td>
+                <td><input type="text" name="adresa" class="form-group" /></td>
+            </tr>
+            <tr>
+                <td><label for="Kime" class="form-group">Korisnicko ime</label></td>
+                <td><input type="text" id="txtusername" name="Kime" onkeyup="checkusername()" class="form-group" /></td>
+
+            </tr>
+            <tr>
+                <td><label for="loz" class="form-group">Lozinka</label></td>
+                <td><input type="text" name="loz" class="form-group" /></td>
+            </tr>
+            <tr>
+                <td><label for="tel" class="form-group">Telefon</label></td>
+                <td><input type="text" name="tel" class="form-group" /></td>
+            </tr>
+
+            <tr>
+                <td><label for="datumZaposljavanja" class="form-group">Datum zapošljavanja</label></td>
+                <td><input type="date" name="datumZaposljavanja" class="form-group" style="width:170px;height:25px;" /></td>
+            </tr>
+            <tr>
+                <td><label for="jmbg" class="form-group">JMBG</label></td>
+                <td><input type="text" name="jmbg" class="form-group" /></td>
+            </tr>
+
+            <tr>
+                <td><label for="DatumRodjenja" class="form-group">Datum rođenja</label></td>
+                <td><input type="date" name="DatumRodjenja" class="form-group" style="width:170px;height:25px;" placeholder=" sada" /></td>
+            </tr>
+        </table>
+        <br />
+        <div style="width:45%;float:left;">
+            <label for="poslovnica" class="form-group" style="text-align:center;">Poslovnica</label>
+            <br />
+            <select name="poslovnica" class="form-group">
+
+                @foreach (var x in Model.poslovnice)
+                {
+
+                    <option value="@x.Value">@x.Text</option>
+
+                }
+            </select>
+        </div>
+        <div style="width:45%;float:left;">
+            <label for="Vrsta" class="form-group">Vrsta uposlenika</label>
+            <br />
+            <select name="vrsta" class="form-group">
+
+                @foreach (var x in Model.Vrsta)
+                {
+
+                    <option value="@x.Value">@x.Text</option>
+
+                }
+            </select>
+        </div>
+        <div style="width:40%;float:left;">
+            <label for="Grad" class="form-group">Grad</label>
+            <br />
+            <select name="Grad" class="form-group">
+
+                @foreach (var x in Model.gradovi)
+                {
+
+                    <option value="@x.Value">@x.Text</option>
+
+                }
+            </select>
+        </div>
+        <div style="float:left">
+            <span id="message"></span>
+            <button type="submit" id="dugme" value="Snimi" class="btn btn-primary">Snimi</button>
+        </div>
+    </form>
+
+
+
+</div>
+<script type="text/javascript">
+    function checkusername() {
+        var uname = $("#txtusername").val();
+        console.log(uname);
+        var dgm = $("#dugme");
+        $.ajax({
+            type: "POST",
+            url: "/Uposlenik/checkusername?username=" + uname,
+            contentType: 'json',
+            success: function (result) {
+                var mess = $("#message");
+                if (!result) {
+                    mess.html("Korisnicko ime je slobodno.");
+                    mess.css("color", "Green");
+                    dgm.show();
+                }
+                else {
+                    mess.html("Korisnicko ime je zauzeto.")
+                    mess.css("color", "Red");
+                    dgm.hide();
+                }
+            }
+        });
+    }
+</script>

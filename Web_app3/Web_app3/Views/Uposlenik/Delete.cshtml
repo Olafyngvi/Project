@@ -1,0 +1,57 @@
+﻿@model AutoServis.Models.Uposlenik
+
+<h3>Da li da želite ovog radnika proglasit nekativnim?</h3>
+<div>
+    <h4>Uposlenik</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Datum zapošljavanja
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DatumZaposljavanja)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.JMBG)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.JMBG)
+        </dd>
+        <dt>
+           Datum rođenja
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DatumRodjenja)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Osoba.Ime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Osoba.Ime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Osoba.Prezime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Osoba.Prezime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Poslovnica)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Poslovnica.Naziv)
+        </dd>
+        <dt>
+            Vrsta uposlenika
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VrstaUposlenika.Naziv)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete" asp-controller="Uposlenik" asp-area="">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Da" class="btn btn-success" /> |
+        <a asp-action="Index" asp-controller="Uposlenik" asp-area="" class="btn btn-default">Nazad na listu</a>
+    </form>
+</div>

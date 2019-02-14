@@ -1,0 +1,74 @@
+﻿@model AutoServis.ViewModels.GradoviVM
+
+<h2>DodavanjeKlijenta</h2>
+
+<div style="background-color:whitesmoke;width:600px;height:600px;margin:20px auto;padding:20px 90px;box-sizing:border-box">
+    <center><h2><b>DODAVANJE KLIJENTA</b></h2></center>
+    <br />
+
+    <form action="/Klijent/snimi" method="post">
+        <table>
+
+            <tr>
+                <td style="width:250px;"><label for="ime" class="form-group">Ime</label></td>
+                <td><input type="text" name="ime" class="form-group" /></td>
+            </tr>
+
+            <tr>
+                <td><label for="prezime" class="form-group">Prezime</label></td>
+                <td><input type="text" name="prezime" class="form-group" /></td>
+            </tr>
+            <tr>
+                <td><label for="adresa" class="form-group">Adresa</label></td>
+                <td><input type="text" name="adresa" class="form-group" /></td>
+            </tr>
+            <tr>
+                <td><label for="Kime" class="form-group">Korisnicko ime</label></td>
+                <td><input type="text" name="Kime" class="form-group" /></td>
+            </tr>
+            <tr>
+                <td><label for="loz" class="form-group">Lozinka</label></td>
+                <td><input type="password" name="loz" class="form-group" /></td>
+            </tr>
+            <tr>
+                <td><label for="tel" class="form-group">Telefon</label></td>
+                <td><input type="text" name="tel" class="form-group" /></td>
+            </tr>
+            <tr>
+
+
+            </tr>
+
+               <td> <label for="Grad" class="form-group">Grad</label></td> 
+
+                <td>
+                    <select name="Grad" class="form-group">
+
+                        @foreach (var x in Model.gradovi)
+    {
+
+                    <option value="@x.Value">@x.Text</option>
+
+}
+                    </select>
+                </td>
+            
+
+
+
+
+        </table>
+        <br />
+      
+        
+       
+        <br />
+        <div style="float:right">
+            <button type="submit" value="Snimi" class="btn btn-success">Snimi</button>
+            <a href="/Klijent/index" class="btn btn-primary">Vrati nazad</a>
+        </div>
+       
+
+    </form>
+    </div>
+

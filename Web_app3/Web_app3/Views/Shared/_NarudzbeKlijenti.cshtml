@@ -1,0 +1,70 @@
+﻿@model IEnumerable<AutoServis.Models.Order>
+
+<div>
+    <center><h3>Narudzbe klijenta</h3></center>
+    <table class="table table-bordered table-condensed table-striped table-hover table-responsive-sm" style="box-shadow: 0 4px 8px rgba(0,0,0,.08);">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Ime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Prezime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DatumNarudzbe)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Grad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ZipCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Zavrsena)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Ukupno)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Prezime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DatumNarudzbe)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Grad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ZipCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Zavrsena)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ukupno)
+                    </td>
+                    <td>
+                        @*<a asp-action="Edit" asp-route-id="@item.OrderId">Edit</a> |
+                            <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>*@
+                        <a data-ajax="true" data-ajax-update="#detalji" asp-controller="Order" asp-action="DijeloviDetalji" asp-route-id="@item.OrderId" asp-route-ukupno="@item.Ukupno" class="btn btn-primary btn-xs">Stavke</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <hr />
+    <div id="detalji">
+
+    </div>
+</div>

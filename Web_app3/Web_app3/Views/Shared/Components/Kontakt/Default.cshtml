@@ -1,0 +1,28 @@
+﻿@model IEnumerable<AutoServis.Models.Poslovnica>
+@{
+    ViewData["Title"] = "Default";
+}
+
+
+
+@foreach (var item in Model)
+{
+    <div style="display:inline-block; margin-top:-10px;">
+        <dl class="dl-horizontal">
+            <dt>Naziv:</dt>
+            <dd>@item.Naziv</dd>
+            <dt>Adresa:</dt>
+            <dd>@item.Adresa</dd>
+            <dt>Telefon:</dt>
+            <dd>@item.Telefon</dd>
+            <dt>Grad:</dt>
+            <dd>@item.Grad.Naziv</dd>
+        </dl>
+
+    </div>
+    <br />
+    <br />
+
+
+}
+

@@ -1,0 +1,156 @@
+﻿<style>
+    .btn-expand-collapse {
+        position: absolute;
+        display: block;
+        left: 0px;
+        bottom: 0;
+        width: 100%;
+        height: 9%;
+        padding: 8px 0;
+        border-top: solid 1px #666;
+        color: grey;
+        font-size: 20px;
+        text-align: center;
+    }
+
+        .btn-expand-collapse:hover,
+        .btn-expand-collapse:focus {
+            background-color: #222;
+            color: white;
+        }
+
+        .btn-expand-collapse:active {
+            background-color: #111;
+        }
+
+    .sidebar-menu, .sidebar-menu .glyphicon, .sidebar-menu .fa {
+        width: 6%;
+        font-size: 22px;
+    }
+
+        .sidebar-menu.collapsed {
+            
+            width: 12%;
+            
+        }
+
+        .sidebar-menu li {
+            margin-left: -25px;
+        }
+
+        .sidebar-menu .glyphicon {
+            
+            padding-right: 10px;
+        }
+
+        .sidebar-menu .tekst,
+        .sidebar-menu .logoo {
+            display: none;
+        }
+        .sidebar-menu.collapsed .tekst,
+        .sidebar-menu.collapsed .logoo {
+            display: inline-block;
+        }
+
+        .main-menu {
+            width: 100%;
+        }
+
+        .sidebar-menu.collapsed .nav-label {
+            display: none;
+        }
+    .sidebar-menu .nav-label {
+        display: inline-block;
+    }
+
+        .glyphicon.collapsed {
+            padding-right: 20px;
+        }
+</style>
+
+<div class="sidebar-menu">
+    <div class="sidebar-header">
+        <div class="logo" style="height:70px;">
+            <a class="logoo" asp-controller="Uposlenik" asp-action="Index" asp-area="AdministratorModul"><img src="~/lib/logo/logo-novi.png" alt="logo" style="height:80px;"></a>
+        </div>
+    </div>
+    <div class="main-menu">
+        <div class="menu-inner">
+            <nav>
+                <ul class="metismenu" id="menu">
+                    <li>
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="glyphicon glyphicon-user"></i><span class="tekst">Uposlenici</span></a>
+                        <ul class="collapse">
+                            <li>
+                                <a asp-controller="Uposlenik" asp-action="Index" asp-area="">Uposlenici</a>
+                            </li>
+                            <li>
+                                <a asp-controller="VrstaUposlenika" asp-action="Index" asp-area="">Vrste uposlenika</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="glyphicon glyphicon-home"></i><span class="tekst">Poslovnice</span></a>
+                        <ul class="collapse">
+                            <li>
+                                <a asp-controller="Poslovnica" asp-action="Index" asp-area="">Poslovnice</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="glyphicon glyphicon-map-marker"></i><span class="tekst">Gradovi</span></a>
+                        <ul class="collapse">
+                            <li>
+                                <a asp-controller="Grad" asp-action="Index" asp-area="">Gradovi</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="glyphicon glyphicon-envelope"></i><span class="tekst">Upiti</span></a>
+                        <ul class="collapse">
+                            <li>
+                                <a asp-controller="Administrator" asp-action="Upiti" asp-area="">Novi upiti</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Administrator" asp-action="OdgUpiti" asp-area="">Odgovoreni upiti</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="glyphicon glyphicon-book"></i><span class="tekst">Podaci o uvozu</span></a>
+                        <ul class="collapse">
+                            <li>
+                                <a asp-controller="VozilaPoslovnice" asp-action="Index" asp-area="">Pregled Podataka</a>
+                            </li>
+                           
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <center><a asp-controller="Autentifikacija" asp-action="LogOut" asp-area="" class="btn-expand-collapse"><span class="glyphicon glyphicon-off align-middle"></span></a></center>
+    </div>
+</div>
+<div class="modal fade" id="DioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div id="modalDodaj">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('.sidebar-menu').hover(function () {
+            $(this).addClass('collapsed');
+            $('.glyphicon').addClass('collapsed');
+        },
+            function () {
+                $(this).removeClass('collapsed');
+                $('.glyphicon').removeClass('collapsed');
+            });
+    });
+</script>

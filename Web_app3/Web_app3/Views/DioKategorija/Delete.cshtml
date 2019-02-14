@@ -1,0 +1,22 @@
+﻿@model AutoServis.Models.DioKategorija
+
+<h2>Brisanje</h2>
+<br />
+<h3>Jeste li sigurni da želite obrisati ovu kategoriju ?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Naziv)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Naziv)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Obriši" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-primary">Nazad</a>
+    </form>
+</div>

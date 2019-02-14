@@ -1,0 +1,35 @@
+﻿@model IEnumerable<AutoServis.Models.OrderDetails>
+
+<h4>Dijelovi</h4>
+<hr />
+<table class="table table-bordered table-condensed table-striped table-hover table-responsive-sm" style="box-shadow: 0 4px 8px rgba(0,0,0,.08);width:50%">
+    <thead>
+        <tr>
+            <th>Naziv</th>
+            <th>Marka</th>
+            <th>Model</th>
+            <th>Sifra</th>
+            <th>Cijena</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var y in Model)
+        {
+            <tr>
+                <td style="text-align:left">@y.Dio.Naziv</td>
+                <td >@y.Dio.model.marka.Nazvi</td>
+                <td >@y.Dio.model.Naziv</td>
+                <td >@y.Dio.Sifra</td>
+                <td >@y.Dio.Cijena</td>
+            </tr>
+        }
+        <tr class="table-active" style="border-top-style:solid">
+            <td colspan="4">Ukupno : </td>
+
+            <td colspan="">
+                @ViewBag.Ukupno
+            </td>
+        </tr>
+
+    </tbody>
+</table>

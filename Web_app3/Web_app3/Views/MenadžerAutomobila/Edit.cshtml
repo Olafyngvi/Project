@@ -1,0 +1,190 @@
+﻿@model AutoServis.Models.VoziloProdaja
+
+<h2>Uređivanje</h2>
+
+
+
+<hr />
+
+   
+
+<form asp-action="Update" asp-controller="MenadžerAutomobila" asp-area=""  enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="VoziloProdajaID" />
+    <div class="row col-md-3">
+        <h3>Vozilo</h3>
+        <hr />
+        <div class="form-group" style="width:100%">
+
+            <span>Gorivo:</span> <select asp-for="GorivoID" style="height:35px; font-weight:bolder" class="form-control" asp-items="ViewBag.GorivoID"></select>
+            <span asp-validation-for="GorivoID" class="text-danger"></span>
+        </div>
+        <div class="form-group" style="width:100%">
+            <b><label asp-for="ModelID" class="control-label">Model:</label></b>
+            <select asp-for="ModelID"  style="height:35px; font-weight:bolder" class="form-control" asp-items="ViewBag.ModelID"></select>
+            <span asp-validation-for="ModelID" class="text-danger"></span>
+        </div>
+        <div class="form-group" style="width:100%">
+            <b><label asp-for="TransmisijaID" class="control-label">Transmisija:</label></b>
+            <select asp-for="TransmisijaID" style="height:35px; font-weight:bolder" class="form-control" asp-items="ViewBag.TransmisijaID"></select>
+            <span asp-validation-for="TransmisijaID" class="text-danger"></span>
+        </div>
+
+        <div class="form-group" style="width:100%">
+            <b><label asp-for="BrojVrataID" class="control-label">Broj vrata:</label></b>
+            <select asp-for="BrojVrataID" style="height:35px;font-weight:bolder" class="form-control" asp-items="ViewBag.BrojVrataID"></select>
+            <span asp-validation-for="BrojVrataID" class="text-danger"></span>
+        </div>
+        <div class="form-group" style="width:100%">
+            <b> <label asp-for="TipVozilaID" class="control-label">Tip vozila:</label></b>
+            <select asp-for="TipVozilaID" style="height:35px;font-weight:bolder" class="form-control" asp-items="ViewBag.TipVozilaID"></select>
+            <span asp-validation-for="TipVozila.Naziv" class="text-danger"></span>
+        </div>
+        <div class="form-group" style="width:100%">
+            <b>
+                <label asp-for="Kubikaza" class="control-label">Kubikaža:</label></b>
+                <input asp-for="Kubikaza" class="form-control" style="font-weight:bolder" />
+                <span asp-validation-for="Kubikaza" class="text-danger"></span>
+</div>
+        <div class="form-group" style="width:100%">
+            <b><label asp-for="SnagaMotora" class="control-label">Snaga motora:</label></b>
+                <input asp-for="SnagaMotora" style="font-weight:bolder" class="form-control" />
+                <span asp-validation-for="SnagaMotora" class="text-danger"></span>
+</div>
+        <div class="form-group" style="width:100%">
+            <b><label asp-for="OpremaID" class="control-label">Oprema:</label></b>
+    <select asp-for="OpremaID" style="height:35px; font-weight:bolder" class="form-control" asp-items="ViewBag.OpremaID"></select>
+    <span asp-validation-for="Oprema.Naziv" class="text-danger"></span>
+</div>
+    </div>
+    <div class="row col-md-3" style="margin-left:10px;">
+        <h3>Karakteristike vozila</h3>
+        <hr />
+
+        <div class="form-group" style="width:100%">
+            <label asp-for="Cijena" class="control-label">Cijena:</label>
+            <input asp-for="Cijena" style="font-weight:bolder" class="form-control" />
+            <span asp-validation-for="Cijena" class="text-danger"></span>
+        </div>
+        <div class="form-group" style="width:100%">
+            <label asp-for="DatumProizvodnje" class="control-label">Datum proizvodnje:</label>
+            <input asp-for="DatumProizvodnje" style="font-weight:bolder" class="form-control" />
+            <span asp-validation-for="DatumProizvodnje" class="text-danger"></span>
+        </div>
+        <div class="form-group" style="width:100%">
+            <label asp-for="Kilometraza" class="control-label">Kilometraža:</label>
+            <input asp-for="Kilometraza" style="font-weight:bolder" class="form-control" />
+            <span asp-validation-for="Kilometraza" class="text-danger"></span>
+        </div>
+        <div class="form-group" style="width:100%">
+            <input name="slikica" value="@Model.Slika" hidden />
+            <img src="@Model.Slika" />
+            <label asp-for="Slika" class="control-label">Slika:</label>
+            <input type="file"  asp-for="Slika" class="form-control" />
+            <span asp-validation-for="Slika" class="text-danger"></span>
+        </div>
+
+
+
+
+        <div class="form-group" style="width:100%">
+            <label asp-for="isDeleted" class="control-label">Prodato</label>
+            <input asp-for="isDeleted" type="checkbox" class="form-control" />
+        </div>
+    </div>
+
+    <br />
+
+    <br />
+
+    <br />  <br />
+
+    <br />
+
+    <br />
+    <br />
+
+    <br />
+
+    <br />
+    <br />
+    <br />
+
+    <br />
+
+    <br />
+
+    <br />
+    <br />
+    <br />
+
+    <br />
+
+    <br />
+
+    <br />
+    <br />
+    <br />
+
+    <br />
+
+    <br />
+
+    <br />
+    <br />
+    <br />
+
+    <br />
+
+
+
+    <br />
+
+<hr />
+
+    <div class="form-group" >
+        <input type="submit" value="Snimi" class="btn btn-success" /> |
+        <a id="BtnNazad" class="btn btn-default">Nazad na vozila</a>
+
+    </div>
+</form>
+
+
+
+
+
+<script>
+
+    $("#BtnNazad").click(function (event) {
+
+      
+
+
+        $.get("/MenadžerAutomobila/Index",
+            function (rez, status) {
+
+                $("#samko").html(rez);
+            });
+
+    });
+
+
+    $('form').submit(function (e) {
+
+
+        toastr.options.positionClass = 'toast-top-left';
+        toastr.options.timeOut = 40000;
+        toastr.options.fadeOut = 350;
+        toastr.options.fadeIn = 350;
+
+        toastr.info("Podatci uređeni!");
+        
+     
+
+
+
+    });
+
+
+
+</script>

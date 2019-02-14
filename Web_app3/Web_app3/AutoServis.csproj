@@ -1,0 +1,109 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+    <UserSecretsId>0e226bed-3910-4cb1-9af9-cb2fe24d0c16</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Areas\**" />
+    <Compile Remove="Views\pomo\**" />
+    <Content Remove="Areas\**" />
+    <Content Remove="Views\pomo\**" />
+    <EmbeddedResource Remove="Areas\**" />
+    <EmbeddedResource Remove="Views\pomo\**" />
+    <None Remove="Areas\**" />
+    <None Remove="Views\pomo\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20181127163157_Kontakt.cs" />
+    <Compile Remove="Migrations\20181127163157_Kontakt.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\lib\assets\css\riki.css" />
+    <Content Remove="wwwroot\lib\SlikeVozila\ident2.jpg" />
+    <Content Remove="wwwroot\lib\SlikeVozila\kina.jpg" />
+    <Content Remove="wwwroot\lib\SlikeVozila\zljo.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Dijelovi\List.cshtml" />
+    <None Include="wwwroot\lib\assets\css\riki.css" />
+    <None Include="wwwroot\lib\assets\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\lib\assets\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\lib\assets\fonts\themify.svg" />
+    <None Include="wwwroot\lib\assets\images\icon\market-value\Thumbs.db" />
+    <None Include="wwwroot\lib\assets\images\icon\Thumbs.db" />
+    <None Include="wwwroot\lib\assets\js\bar-chart.js" />
+    <None Include="wwwroot\lib\assets\js\bootstrap.min.js" />
+    <None Include="wwwroot\lib\assets\js\jquery.slicknav.min.js" />
+    <None Include="wwwroot\lib\assets\js\jquery.slimscroll.min.js" />
+    <None Include="wwwroot\lib\assets\js\line-chart.js" />
+    <None Include="wwwroot\lib\assets\js\maps.js" />
+    <None Include="wwwroot\lib\assets\js\metisMenu.min.js" />
+    <None Include="wwwroot\lib\assets\js\owl.carousel.min.js" />
+    <None Include="wwwroot\lib\assets\js\pie-chart.js" />
+    <None Include="wwwroot\lib\assets\js\plugins.js" />
+    <None Include="wwwroot\lib\assets\js\popper.min.js" />
+    <None Include="wwwroot\lib\assets\js\scripts.js" />
+    <None Include="wwwroot\lib\assets\js\vendor\jquery-2.2.4.min.js" />
+    <None Include="wwwroot\lib\assets\js\vendor\modernizr-2.8.3.min.js" />
+    <None Include="wwwroot\lib\css\stajl.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bootbox.JS" Version="4.4.1" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="2.2.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
+    <PackageReference Include="Microsoft.jQuery.Unobtrusive.Ajax" Version="3.2.6" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.1" />
+    <PackageReference Include="MvcPagedList.Core" Version="1.0.5" />
+    <PackageReference Include="Nexmo.Csharp.Client" Version="3.2.2" />
+    <PackageReference Include="PagedList.Core.Mvc" Version="1.2.0" />
+    <PackageReference Include="ReflectionIT.Mvc.Paging" Version="3.3.0" />
+    <PackageReference Include="toastr" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\" />
+    <Folder Include="CSS\" />
+    <Folder Include="wwwroot\lib\SlikeVozila\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Shared\Checkout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\CheckoutComplete.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Details2.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Find.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Index2.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\_pretragaPopravke.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\_pretragaRacuna.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ShoppingCart\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
+</Project>

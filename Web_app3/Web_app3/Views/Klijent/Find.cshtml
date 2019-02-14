@@ -1,0 +1,68 @@
+﻿@model AutoServis.ViewModels.KlijentGradoviVMM
+
+<h2>Find</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Ime
+            </th>
+            <th>
+                Prezime
+            </th>
+            <th>
+                Adresa
+            </th>
+            <th>
+                Korisnicko ime
+
+            </th>
+            <th>
+                Telefon
+            </th>
+            <th>
+                Grad
+            </th>
+            <th>
+                Datum registracije
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Klijenti)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Osoba.Ime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Osoba.Prezime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Osoba.Adresa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Osoba.KorisnickoIme)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Osoba.Telefon)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Osoba.Grad.Naziv)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatumRegistracije)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-warning">Detalji</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Obriši</a>
+                </td>
+                </tr>
+        }
+       </tbody>
+
+   </table>
+

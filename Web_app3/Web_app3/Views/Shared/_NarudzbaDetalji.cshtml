@@ -1,0 +1,173 @@
+﻿@model AutoServis.ViewModels.NarudzbaDijeloviViewModel
+@{ var sPopustom = Model.Ukupno * 0.9;
+    //sPopustom za one sa vise narudzbi se prikazuje samo kod 
+    //    onih koji ih obraduju da bude iznenadjenje za redovne kupce :)
+    }
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4" style="box-shadow: 0 4px 8px rgba(0,0,0,.08);">
+        <h4 style="padding-left:100px">Detalji</h4>
+        <hr />
+        <dl class="dl-horizontal pricing-list">
+            <dt style="text-align:left">
+                @Html.DisplayNameFor(model => model.Ime)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Ime)
+            </dd>
+            <dt style="text-align:left">
+                @Html.DisplayNameFor(model => model.Prezime)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Prezime)
+            </dd>
+            <dt style="text-align:left">
+                @Html.DisplayNameFor(model => model.Adresa)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Adresa)
+            </dd>
+            <dt style="text-align:left">
+                @Html.DisplayNameFor(model => model.Grad)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Grad)
+            </dd>
+            <dt style="text-align:left">
+                Postanski broj
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ZipCode)
+            </dd>
+            <dt style="text-align:left">
+                @Html.DisplayNameFor(model => model.Drzava)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Drzava)
+            </dd>
+            <dt style="text-align:left">
+                Broj telefona
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.BrojTelefona)
+            </dd>
+            <dt style="text-align:left">
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+            <dt style="text-align:left">
+                Datum narudzbe
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DatumNarudzbe)
+            </dd>
+            <dt style="text-align:left">
+                Broj narudzbi
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.BrojNarudzbi)
+            </dd>
+            <dt style="text-align:left">
+                Status
+            </dt>
+            @{if (Model.Zavrsena == true)
+                {
+                    <dd>
+                        <p>Zavrsena</p>
+                    </dd>
+                }
+                else
+                {
+                    <dd>
+                        <p>Na cekanju</p>
+                    </dd>
+                    <dt style="text-align:left">Akcija</dt>
+                    <dd><a class="btn btn-primary" atribut="@Model.NarudzbaId" id="js-zavrsi">Zavrsi</a></dd>
+                }
+            }
+        </dl>
+    </div>
+    <div class="col-md-4">
+        <h4>Dijelovi</h4>
+        <hr />
+        <table class="table table-striped" style="box-shadow: 0 4px 8px rgba(0,0,0,.08);width:100%;">
+            <thead>
+                <tr>
+                    <th>Naziv</th>
+                    <th>Marka</th>
+                    <th>Model</th>
+                    <th>Sifra</th>
+                    <th>Cijena</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var y in Model.Dijelovi)
+                {
+                    <tr>
+                        <td style="text-align:left">@y.Dio.Naziv</td>
+                        <td style="text-align:right">@y.Dio.model.marka.Nazvi</td>
+                        <td style="text-align:right">@y.Dio.model.Naziv</td>
+                        <td style="text-align:right">@y.Dio.Sifra</td>
+                        <td style="text-align:right">@y.Dio.Cijena</td>
+                    </tr>
+                }
+                <tr class="table-active" style="border-top-style:solid">
+                    <td>Popust za preko 10 :</td>
+                    <td style="text-align:right" colspan="5">
+                        @if (Model.BrojNarudzbi > 10 && Model.Zavrsena == false)
+                        {<p>10%</p>}
+                        else
+                        { <p>Nema</p>}
+                    </td>
+                </tr>
+                <tr class="table-active">
+                    <td colspan="2">Ukupno : </td>
+
+                    <td style="text-align:right" colspan="3">
+                        @if (Model.BrojNarudzbi > 5 && Model.Zavrsena == false)
+                        {@sPopustom }
+                    else
+                    {@Model.Ukupno}
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<script>
+    $(document).ready(function (){
+        $("#js-zavrsi").on("click", function () {
+            var ro = $("#" + @Model.NarudzbaId);
+            var button = $(this);
+            bootbox.confirm({
+                title: "Zavrsiti narudzbu?",
+                message: "Da li zelite da zavrsite ovu narudzbu ?",
+                buttons: {
+                    cancel: {
+                        label: '<i class="fa fa-times"></i> Ne'
+                    },
+                    confirm: {
+                        label: '<i class="fa fa-check"></i> Da'
+                    }
+                },
+                callback: function (result) {
+                    if (result == true) {
+                        $.ajax({
+                            url: "Zavrsi/" + button.attr("atribut"),
+                            method: "Zavrsi",
+                            success: function () {
+                                ro.remove();
+                            }
+                        })
+                    }
+                }
+            });
+        })
+    })
+</script>

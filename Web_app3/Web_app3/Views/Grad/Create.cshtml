@@ -1,0 +1,19 @@
+﻿@model AutoServis.Models.Grad
+
+<h2>Dodaj Grad</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" asp-controller="Grad" asp-area="">
+            <div class="form-group">
+                <label asp-for="Naziv" class="control-label"></label>
+                <input asp-for="Naziv" required
+                               oninvalid="this.setCustomValidity('Naziv je obavezan!')"
+                               oninput="this.setCustomValidity('')" class="form-control" />
+            </div>
+            <div class="form-group">
+                <button type="submit" value="Create" class="btn btn-primary">Dodaj</button>
+            </div>
+        </form>
+    </div>
+</div>

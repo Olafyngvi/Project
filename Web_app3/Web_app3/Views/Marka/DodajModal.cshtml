@@ -1,0 +1,23 @@
+﻿@model AutoServis.Models.Marka
+
+<hr />
+<div class="modal-header">
+    <h3 class="modal-title" id="exampleModalLongTitle">Dodavanje Marke</h3>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form asp-controller="Marka" asp-action="Dodaj">
+    <div class="container-fluid">
+        <div class="form-group">
+            <label class="control-label">Naziv</label>
+            <input asp-for="Nazvi" required placeholder="Unesi naziv"
+                   oninvalid="this.setCustomValidity('Naziv je obavezan!')"
+                   oninput="this.setCustomValidity('')" class="form-control" />
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+        <input type="submit" value="Snimi" class="btn btn-primary" />
+    </div>
+</form>

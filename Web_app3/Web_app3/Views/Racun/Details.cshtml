@@ -1,0 +1,132 @@
+﻿@model AutoServis.ViewModels.InformacijeRacuna
+
+
+@{
+    ViewData["Title"] = "Details";
+    double uk = 0;
+    double uk1 = 0;
+}
+
+<h2>Detalji računa</h2>
+
+<div class="row" >
+    <div class="col-md-2" style="padding:30px;box-sizing:border-box;">
+        <h3>Uposlenik:</h3>
+        <br />
+        <h1 style="display:inline;">@Model.Uposlenik @Model.UposlenikPrezime</h1>
+
+    </div>
+    <div class="col-md-2" style="padding:30px;box-sizing:border-box;">
+        <h3> Datum popravke:</h3>
+        <br />
+        <h2 style="display:inline;">@Model.DatumPopravke </h2>
+
+
+    </div>
+    <div class="col-md-2" style="padding:30px;box-sizing:border-box;">
+        <h3>Poslovnica:</h3>
+        <br />
+        <h2 style="display:inline;">@Model.Poslovnica </h2>
+
+
+    </div>
+
+
+</div>
+<div class="row" style="background-color:lightgray;">
+
+    <div class="col-md-5" style="padding:30px;box-sizing:border-box;">
+        <table>
+            <tr style="width:400px;height:100px;">
+
+                <td style="width:300px;font-size:1.5em">
+                    Opis kvara
+                </td>
+
+                <td style="width:100px;font-size:1.5em">
+                    @Model.OpisKvara
+
+                </td>
+            </tr>
+            <tr>
+                <td style="width:300px;font-size:1.5em">
+                    Cijena popravke
+                </td>
+
+                <td style="width:100px;font-size:1.5em">
+                    @Model.cijeaPop KM
+
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+</div>
+<div class="row" style="background-color:lightgray;">
+
+    <div style="width:100%;height:auto;background-color:white;float:left;padding:20px 60px;box-sizing:border-box;">
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th><center>Naziv</center></th>
+                    <th><center>Cijena</center></th>
+                    <th><center>Kolicina</center></th>
+                    <th><center>Ukupno</center></th>
+
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var x in Model.ListaDijelova)
+                {
+                    <tr>
+
+                        <td><center>@x.UtroseniDio</center></td>
+                        <td><center>@x.cijena.ToString("0.00")</center></td>
+                        <td><center>@x.kolicina</center></td>
+                        <td style="display:none;"><center>@(uk1 = x.kolicina * x.cijena) </center></td>
+                        <td><center>@uk1.ToString("0.00") KM</center></td>
+                    </tr>
+
+                }
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td><b>Ukupno: </b>  </td>
+                    <td><center><b style="font-size:23px;">@uk1.ToString("0.00")    </b> KM  </center></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td><b>Cijena za ruke:</b></td>
+                    <td><center><b style="font-size:23px;">@Model.cijeaPop.ToString("0.00")    </b> KM  </center></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><center><b style="display:none;">@(uk = Model.cijeaPop + uk1)</b></center></td>
+
+                    <td><b>Ukupno za naplatiti:</b></td>
+                    <td><center><b style="font-size:23px;">@uk.ToString("0.00") </b> KM  </center></td>
+
+                </tr>
+
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+
+
+<div>
+
+    <a asp-action="RacuniPregled" class="btn btn-default btn-lg">Nazad na listu</a>
+</div>
+
